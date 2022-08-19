@@ -1,3 +1,5 @@
+require('dotenv').config({ debug: true })
+
 const { prefix, token } = require("./config.json");
 
 const { Client, Intents, Collection } = require('discord.js');
@@ -8,8 +10,6 @@ const fs = require("fs");
 const { MessageEmbed } = require('discord.js');
 
 bot.commands = new Collection();
-
-require('dotenv').config()
 
 const commandFiles = fs.readdirSync('./commands/').filter(f => f.endsWith('.js'))
 for (const file of commandFiles) {
