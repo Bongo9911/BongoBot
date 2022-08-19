@@ -1,0 +1,16 @@
+{
+    "name": "give-and-take-bot",
+    "version": "0.0.0",
+    "scripts": {},
+    "private": true,
+    "dependencies": {
+        "@types/node": "^17.0.38",
+        "chart.js": "^3.8.0",
+        "chart.js-image": "^6.0.3",
+        "chartjs-node-canvas": "^4.1.6",
+        "discord.js": "13.7.0",
+        "dotenv": "^16.0.1",
+        "ts-node": "^10.8.0",
+        "typescript": "^4.7.2"
+    }
+}
