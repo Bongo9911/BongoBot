@@ -364,7 +364,7 @@ bot.on("messageCreate", async message => {
         let perColumn = Math.max(nonZeroItems.length / columns);
 
         const pointsEmbed = new MessageEmbed()
-            .setColor('#0099ff')
+            .setColor('#0099ff');
             // .setTitle("Points");
 
         for (let i = 0; i < columns; ++i) {
