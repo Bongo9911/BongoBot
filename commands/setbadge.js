@@ -8,7 +8,8 @@ let badges = {
     "serial killer": "Serial Killer",
     "savior": "Savior",
     "memento mori": "Memento Mori",
-    "double trouble": "Double Trouble"
+    "double trouble": "Double Trouble",
+    "finishing blow": "Finishing Blow"
 }
 
 exports.run = async (bot, message, args) => {
