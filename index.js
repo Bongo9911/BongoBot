@@ -286,6 +286,7 @@ bot.on("messageCreate", async message => {
         let totalNonzero = items.filter(m => m.points > 0).length;
 
         if (valid) {
+            let player = players.filter(p => p.id === message.author.id)[0];
 
             for (let p = 0; p < items.length; ++p) {
                 history[p].push(items[p].points);
