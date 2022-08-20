@@ -292,7 +292,7 @@ bot.on("messageCreate", async message => {
                 history[p].push(items[p].points);
             }
 
-            if (totalNonzero == 2) {
+            if (totalNonzero == 2 && player.badges.indexOf("Finishing Blow") == -1) {
                 player.badges.push("Finishing Blow");
                 message.reply("Badge Awarded! :boom: **Finishing Blow**");
             }
