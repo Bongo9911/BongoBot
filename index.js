@@ -9,7 +9,7 @@ const fs = require("fs");
 
 const { MessageEmbed } = require('discord.js');
 
-var CronJob = require('cron').CronJob;
+// var CronJob = require('cron').CronJob;
 
 bot.commands = new Collection();
 
