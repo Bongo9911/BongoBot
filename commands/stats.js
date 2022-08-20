@@ -7,7 +7,8 @@ let badges = {
     "Hero": ":superhero:",
     "Savior": ":innocent:",
     "Memento Mori": ":skull:",
-    "Double Trouble": ":camel:"
+    "Double Trouble": ":camel:",
+    "Finishing Blow": ":boom:"
 }
 
 let badgeLinks = {
@@ -16,7 +17,8 @@ let badgeLinks = {
     "Hero": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/superhero_1f9b8.png",
     "Savior": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/smiling-face-with-halo_1f607.png",
     "Memento Mori": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/skull_1f480.png",
-    "Double Trouble": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/two-hump-camel_1f42b.png"
+    "Double Trouble": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/two-hump-camel_1f42b.png",
+    "Finishing Blow": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/collision_1f4a5.png",
 }
 
 exports.run = async (bot, message, args) => {

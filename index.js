@@ -9,6 +9,8 @@ const fs = require("fs");
 
 const { MessageEmbed } = require('discord.js');
 
+var CronJob = require('cron').CronJob;
+
 bot.commands = new Collection();
 
 const commandFiles = fs.readdirSync('./commands/').filter(f => f.endsWith('.js'))
@@ -226,13 +228,16 @@ bot.on("messageCreate", async message => {
                 killers.push(message.author.id);
                 if (items[minusindex].savetime > 0 && items[minusindex].savetime - (new Date().getTime() - 300000) > 0 && player.badges.indexOf("Memento Mori") == -1) {
                     player.badges.push("Memento Mori")
+                    message.reply("Badge Awarded! :skull: **Memento Mori**");
                 }
 
                 if (player.kills == 1) {
                     player.badges.push("Killer");
+                    message.reply("Badge Awarded! :knife: **Killer**");
                 }
                 else if (player.kills == 5) {
                     player.badges.push("Serial Killer");
+                    message.reply("Badge Awarded! :dagger: **Serial Killer**");
                 }
             }
             //if ((points[plusindex] == 2 && points.filter(p => p > 0).length > 5) || (points[plusindex] == 3 && points.filter(p => p > 0).length <= 5)) {
@@ -243,13 +248,16 @@ bot.on("messageCreate", async message => {
 
                 if (player.saves == 1) {
                     player.badges.push("Hero");
+                    message.reply("Badge Awarded! :superhero: **Hero**");
                 }
                 else if (player.saves == 5) {
                     player.badges.push("Savior");
+                    message.reply("Badge Awarded! :innocent: **Savior**");
                 }
 
                 if (items[plusindex].savetime != 0 && player.badges.indexOf("Double Trouble") == -1) {
                     player.badges.push("Double Trouble");
+                    message.reply("Badge Awarded! :camel: **Double Trouble**");
                 }
 
                 items[plusindex].savetime = new Date().getTime();
@@ -257,6 +265,10 @@ bot.on("messageCreate", async message => {
 
             items[minusindex].points -= 1;
             items[plusindex].points += 1;
+
+            if (items[minusindex].points < 0) {
+                items[minusindex].points = 0;
+            }
         }
 
         let totalNonzero = items.filter(m => m.points > 0).length;
@@ -267,8 +279,9 @@ bot.on("messageCreate", async message => {
                 history[p].push(items[p].points);
             }
 
-            if (items[minusindex].points < 0) {
-                items[minusindex].points = 0;
+            if(totalNonzero == 2) {
+                player.badges.push("Finishing Blow");
+                message.reply("Badge Awarded! :boom: **Finishing Blow**");
             }
 
             let nonZeroItems = items.filter((m, i) => m.points > 0 || (m.points == 0 && i == minusindex));
@@ -311,6 +324,21 @@ bot.on("messageCreate", async message => {
                         nonZeroItems.push(items[i].item);
                     }
                 }
+
+                // let time = new Date(new Date().getTime() + (1000 * 60 * 60 * 12));
+                // let schedule = time.getMinutes() + " " + time.getHours() + " " + time.getDay() + " * * *";
+
+                // var job = new CronJob(
+                //     schedule,
+                //     function() {
+                //         console.log('Voting ended');
+                //         job.stop();
+                //     },
+                //     null,
+                //     true,
+                //     'America/Detroit'
+                // );
+
                 //"You can send another message <t:" + (Math.ceil(player.lastMsg / 1000) + (items.filter(p => p.points > 0).length <= 5 ? 1800 : 3600)) + ":R>."
                 winVoteMsg = await message.channel.send("**<@&983347003176132608>\nFINAL TWO:**\n(react to vote)\n" +
                 "Voting ends <t:" + (new Date.getTime() + (1000 * 60 * 60 * 12)) + ":R>\n" +
@@ -391,5 +419,18 @@ bot.on("messageCreate", async message => {
     }
 
 });
+
+// bot.on("ready", c => {
+//     var job = new CronJob(
+//         '* * * * * *',
+//         function() {
+//             console.log('Voting ended');
+//             job.stop();
+//         },
+//         null,
+//         true,
+//         'America/Los_Angeles'
+//     );
+// })
 
 bot.login(process.env.TOKEN);
