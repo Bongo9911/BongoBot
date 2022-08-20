@@ -1,5 +1,4 @@
 node_modules/*
-players.json
 points.txt
 data.json
 .env
