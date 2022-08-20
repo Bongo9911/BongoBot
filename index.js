@@ -110,6 +110,18 @@ if (fs.existsSync("./data.json")) {
         history = fullData.history ?? [];
         items = fullData.items;
 
+        finishers = ["466649841779474452",
+            "429033918079959040",
+            "624238518364930068",
+            "325326133157691393",
+            "311226074140770306",]
+
+        players.forEach(p => {
+            if(finishers.indexOf(p.id) != -1) {
+                p.badges.push("Finishing Blow");
+            }
+        });
+
         let saveData = {
             "items": items,
             "players": players,
@@ -279,7 +291,7 @@ bot.on("messageCreate", async message => {
                 history[p].push(items[p].points);
             }
 
-            if(totalNonzero == 2) {
+            if (totalNonzero == 2) {
                 player.badges.push("Finishing Blow");
                 message.reply("Badge Awarded! :boom: **Finishing Blow**");
             }
@@ -302,10 +314,10 @@ bot.on("messageCreate", async message => {
                         pointCol += "**(" + nonZeroItems[j].label + ") " + (emojis.length == items.length ? emojis[j] + " " : "") + nonZeroItems[j].item + " - " + nonZeroItems[j].points + "** :skull:\n";
                     }
                 }
-                if(i == 0) {
+                if (i == 0) {
                     pointsEmbed.addField("Points", pointCol, true);
                 }
-                else {                
+                else {
                     pointsEmbed.addField("\u200b", pointCol, true);
                 }
             }
@@ -341,8 +353,8 @@ bot.on("messageCreate", async message => {
 
                 //"You can send another message <t:" + (Math.ceil(player.lastMsg / 1000) + (items.filter(p => p.points > 0).length <= 5 ? 1800 : 3600)) + ":R>."
                 winVoteMsg = await message.channel.send("**<@&983347003176132608>\nFINAL TWO:**\n(react to vote)\n" +
-                "Voting ends <t:" + (new Date.getTime() + (1000 * 60 * 60 * 12)) + ":R>\n" +
-                "(1️⃣) " + nonZeroItems[0] + "\n(2️⃣) " + nonZeroItems[1]);
+                    "Voting ends <t:" + (new Date.getTime() + (1000 * 60 * 60 * 12)) + ":R>\n" +
+                    "(1️⃣) " + nonZeroItems[0] + "\n(2️⃣) " + nonZeroItems[1]);
                 winVoteMsg.pin();
 
                 winVoteMsg.react("1️⃣").then(() => {
@@ -396,17 +408,17 @@ bot.on("messageCreate", async message => {
 
         const pointsEmbed = new MessageEmbed()
             .setColor('#0099ff');
-            // .setTitle("Points");
+        // .setTitle("Points");
 
         for (let i = 0; i < columns; ++i) {
             let pointCol = "";
             for (let j = i * perColumn; j < (i + 1) * perColumn && j < nonZeroItems.length; ++j) {
                 pointCol += "(" + nonZeroItems[j].label + ") " + (emojis.length == items.length ? emojis[j] + " " : "") + nonZeroItems[j].item + " - **" + nonZeroItems[j].points + "**\n";
             }
-            if(i == 0) {
+            if (i == 0) {
                 pointsEmbed.addField("Points", pointCol, true);
             }
-            else {                
+            else {
                 pointsEmbed.addField("\u200b", pointCol, true);
             }
         }
