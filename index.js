@@ -118,7 +118,9 @@ if (fs.existsSync("./data.json")) {
 
         players.forEach(p => {
             if(finishers.indexOf(p.id) != -1) {
-                p.badges.push("Finishing Blow");
+                while(p.badges.filter(b => b == "Finishing Blow").count() > 1) {
+                    p.badges.splice(p.badges.indexOf("Finishing Blow"), 1);
+                }
             }
         });
 
