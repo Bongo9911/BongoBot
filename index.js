@@ -42,48 +42,6 @@ for (const file of eventFiles) {
     }
 }
 
-let itemnames = ["Beige",
-    "Black",
-    "Blue",
-    "Brown",
-    "Coral",
-    "Crimson",
-    "Cyan",
-    "Forest Green",
-    "Gold",
-    "Green",
-    "Gray",
-    "Indigo",
-    "Lavender",
-    "Lilac",
-    "Lime",
-    "Magenta",
-    "Maroon",
-    "Mint",
-    "Navy",
-    "Ochre",
-    "Orange",
-    "Peach",
-    "Pink",
-    "Purple",
-    "Red",
-    "Rose",
-    "Silver",
-    "Sky Blue",
-    "Tan",
-    "Teal",
-    "Turquoise",
-    "Violet",
-    "White",
-    "Yellow"];
-// let itemsLower = [];
-let labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
-    "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34"]
-
-let emojis = ["🍎", "🥑", "🍌", "🫑", "<:Blackberry:993920724915978261>", "🫐", "🍒", "🌶️", "🥥", "🌽", "🥒", "<:Durian:994234881594904647>",
-    "🍆", "🍇", "🍏", "🥝", "🍋", "<:Lime:993920996119695420>",
-    "🥭", "🍈", "🫒", "🍊", "🍑", "🍐", "🍍", "<:Plum:994241824799596665>", "🎃", "<:Raspberry:993920726329471106>", "🍓", "🍅", "🍉"]
-
 let players = [];
 
 let kills = [];
@@ -112,7 +70,6 @@ if (fs.existsSync("./data.json")) {
         history = fullData.history ?? [];
         items = fullData.items;
         active = fullData.active ?? false;
-        admins = fullData.admins ?? ["200313450319052801"];
 
         let saveData = {
             "items": items,
@@ -301,10 +258,10 @@ bot.on("messageCreate", async message => {
                 let pointCol = "";
                 for (let j = i * perColumn; j < (i + 1) * perColumn && j < nonZeroItems.length; ++j) {
                     if (nonZeroItems[j].points > 0) {
-                        pointCol += "(" + nonZeroItems[j].label + ") " + (emojis.length == items.length ? emojis[j] + " " : "") + nonZeroItems[j].item + " - **" + nonZeroItems[j].points + "**\n";
+                        pointCol += "(" + nonZeroItems[j].label + ") " + (nonZeroItems[j].emoji ? nonZeroItems[j].emoji + " " : "") + nonZeroItems[j].item + " - **" + nonZeroItems[j].points + "**\n";
                     }
                     else {
-                        pointCol += "**(" + nonZeroItems[j].label + ") " + (emojis.length == items.length ? emojis[j] + " " : "") + nonZeroItems[j].item + " - " + nonZeroItems[j].points + "** :skull:\n";
+                        pointCol += "**(" + nonZeroItems[j].label + ") " + (nonZeroItems[j].emoji ? nonZeroItems[j].emoji + " " : "") + nonZeroItems[j].item + " - " + nonZeroItems[j].points + "** :skull:\n";
                     }
                 }
                 if (i == 0) {
@@ -406,7 +363,7 @@ bot.on("messageCreate", async message => {
         for (let i = 0; i < columns; ++i) {
             let pointCol = "";
             for (let j = i * perColumn; j < (i + 1) * perColumn && j < nonZeroItems.length; ++j) {
-                pointCol += "(" + nonZeroItems[j].label + ") " + (emojis.length == items.length ? emojis[j] + " " : "") + nonZeroItems[j].item + " - **" + nonZeroItems[j].points + "**\n";
+                pointCol += "(" + nonZeroItems[j].label + ") " + (nonZeroItems[j].emoji ? nonZeroItems[j].emoji + " " : "") + nonZeroItems[j].item + " - **" + nonZeroItems[j].points + "**\n";
             }
             if (i == 0) {
                 pointsEmbed.addField("Points", pointCol, true);

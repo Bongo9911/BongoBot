@@ -77,17 +77,48 @@ function getIDs(message) {
                 let message = messages.first();
                 if (message.content.toUpperCase() === "NO") {
                     ids = Array.from({ length: items.length }, (_, i) => (i + 1).toString());
-                    finishCreateTheme(message);
+                    getEmojis(message);
                 }
                 else {
                     ids = message.content.split(/\r?\n/).filter(m => m.length);
                     if (ids.length === items.length) {
                         console.log(ids);
-                        finishCreateTheme(message);
+                        getEmojis(message);
                     }
                     else {
                         message.reply("Invalid number of ids provided. Must equal number of items (" + items.length + ").");
                         getIDs(message);
+                    }
+                }
+            }).catch(collected => {
+                message.reply('Request Timed Out');
+            });
+        })
+}
+
+function getEmojis(message) {
+    let filter = m => m.author.id === message.author.id
+    message.reply("Would you like to add custom emojis for these items?" +
+        "\nIf yes, reply with a list of emojis, if no, reply 'NO'").then(() => {
+            message.channel.awaitMessages({
+                filter,
+                max: 1,
+                time: 30000,
+                errors: ['time']
+            }).then(messages => {
+                let message = messages.first();
+                if (message.content.toUpperCase() === "NO") {
+                    finishCreateTheme(message);
+                }
+                else {
+                    emojis = message.content.split(/\r?\n/).filter(m => m.length);
+                    if (emojis.length === items.length) {
+                        console.log(emojis);
+                        finishCreateTheme(message);
+                    }
+                    else {
+                        message.reply("Invalid number of emojis provided. Must equal number of items (" + items.length + ").");
+                        getEmojis(message);
                     }
                 }
             }).catch(collected => {
@@ -102,7 +133,7 @@ function finishCreateTheme(message) {
         itemobjs.push({
             item: items[i],
             label: ids[i],
-            emoji: null
+            emoji: emojis.length ? emojis[i] : null
         })
     }
     console.log("Items: " + itemobjs.map(m => "{ Item: " + m.item + ", Label: " + m.label + " } "));
