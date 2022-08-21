@@ -5,7 +5,7 @@ exports.run = async (bot, message, args) => {
     if (fs.existsSync("./themes.json")) {
         fs.readFile("./themes.json", 'utf8', async (err, data) => {
             themeData = JSON.parse(data);
-            themes = themeData.themes;
+            themes = themeData.themes.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1);
 
             themeList = "";
 
