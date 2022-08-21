@@ -83,5 +83,5 @@ function startTheme() {
 }
 
 exports.help = {
-    name: "theme"
+    name: "starttheme"
 }
