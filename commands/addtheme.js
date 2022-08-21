@@ -79,10 +79,10 @@ function finishCreateTheme() {
     for(let i = 0; i < items.length; ++i) {
         itemobjs.push({
             item: items[i],
-            ids: ids[i]
+            label: ids[i]
         })
     }
-    console.log("Items: " + itemobjs);
+    console.log("Items: " + itemobjs.map(m => "Name: " + m.name + ", Label: " + m.label));
 }
 
 exports.help = {
