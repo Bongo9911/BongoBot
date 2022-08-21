@@ -1,9 +1,12 @@
 const { MessageEmbed } = require('discord.js');
 const fs = require("fs");
+const { default: DataManager } = require('../data/dataManager');
 
 let themes = [];
 let themename = "";
 let themeIndex = -1;
+
+let dm = DataManager.getInstance();
 
 exports.run = async (bot, message, args) => {
     if (fs.existsSync("./settings.json")) {
@@ -64,12 +67,8 @@ function startTheme(message) {
                             fullData.items = items;
                             fullData.active = true;
 
-                            fs.writeFile("./data.json", JSON.stringify(fullData), 'utf8', (err) => {
-                                if (err) {
-                                    console.error(err);
-                                }
-                                message.reply("Starting theme: " + themes[themeIndex].name);
-                            });
+                            dm.saveData(fullData);
+                            message.reply("Starting theme: " + themes[themeIndex].name);
                         }
                         else {
                             message.reply("Points must be greater than 0.");

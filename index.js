@@ -8,6 +8,7 @@ const bot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MES
 const fs = require("fs");
 
 const { MessageEmbed } = require('discord.js');
+const { default: DataManager } = require('./data/dataManager');
 
 // var CronJob = require('cron').CronJob;
 
@@ -53,41 +54,7 @@ let history = [];
 
 let items = [];
 
-let active = false;
-
-if (fs.existsSync("./data.json")) {
-    fs.readFile("./data.json", 'utf8', (err, data) => {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        let fullData = JSON.parse(data);
-        players = fullData.players;
-        kills = fullData.kills;
-        killers = fullData.killers;
-        saves = fullData.saves;
-        savers = fullData.savers;
-        history = fullData.history ?? [];
-        items = fullData.items;
-        active = fullData.active ?? false;
-
-        // let saveData = {
-        //     "items": items,
-        //     "players": players,
-        //     "kills": kills,
-        //     "killers": killers,
-        //     "saves": saves,
-        //     "savers": savers,
-        //     "history": history,
-        //     "active": active
-        // }
-        // fs.writeFile("./data.json", JSON.stringify(saveData), 'utf8', (err) => {
-        //     if (err) {
-        //         console.error(err);
-        //     }
-        // });
-    });
-}
+let dm = DataManager.getInstance();
 
 let winVoteMsg;
 
@@ -101,6 +68,16 @@ bot.on("messageCreate", async message => {
     let messageArray = message.content.split(" ");
     let cmd = messageArray[0];
     let args = messageArray.slice(1);
+
+    let fullData = dm.getData();
+    players = fullData.players;
+    kills = fullData.kills;
+    killers = fullData.killers;
+    saves = fullData.saves;
+    savers = fullData.savers;
+    history = fullData.history;
+    items = fullData.items;
+    active = fullData.active;
 
     let errors = "";
 
@@ -334,11 +311,7 @@ bot.on("messageCreate", async message => {
                 "active": active,
             }
 
-            fs.writeFile("./data.json", JSON.stringify(data), 'utf8', (err) => {
-                if (err) {
-                    console.error(err);
-                }
-            });
+            dm.saveData(data);
         }
         else {
             message.reply(errors);

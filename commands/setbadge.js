@@ -1,6 +1,8 @@
 const { MessageEmbed } = require('discord.js');
 const fs = require("fs");
+const { default: DataManager } = require('../data/dataManager');
 
+let dm = DataManager.getInstance();
 
 let badges = {
     "killer": "Killer",
@@ -23,21 +25,18 @@ exports.run = async (bot, message, args) => {
 
             let player = fullData.players.filter(p => p.id == message.author.id);
 
-            if(player) {
+            if (player) {
                 let badge = message.content.slice(10).trim();
-                if(badge.toLowerCase() in badges){
+                if (badge.toLowerCase() in badges) {
                     fullData.players.forEach(p => {
-                        if(p.id == message.author.id) {
+                        if (p.id == message.author.id) {
                             p.featuredBadge = badges[badge.toLowerCase()];
                         }
                     })
                     console.log(fullData.players.filter(p => p.id == message.author.id));
-                    fs.writeFile("./data.json", JSON.stringify(fullData), 'utf8', (err) => {
-                        if (err) {
-                            console.error(err);
-                        }
-                        message.reply("Featured badge successfully set");
-                    });
+                    
+                    dm.saveData(fullData);
+                    message.reply("Featured badge successfully set");
                 }
                 else {
                     message.reply("Badge " + badge + " not found.");
