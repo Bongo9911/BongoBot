@@ -33,7 +33,7 @@ function confirmRemoveTheme(message) {
             errors: ['time']
         }).then(messages => {
             let message = messages.first()
-            if (message.content.toUpperCase() == "NO") {
+            if (message.content.toUpperCase() == "YES") {
                 fs.readFile("./themes.json", 'utf8', async (err, data) => {
                     let themeData = JSON.parse(data);
                     if(themeData.themes.filter(t => t.name.toLowerCase() == themename.toLowerCase()).length == 1) {
