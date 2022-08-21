@@ -10,10 +10,10 @@ let emojis = [];
 exports.run = async (bot, message, args) => {
     if (fs.existsSync("./themes.json")) {
         fs.readFile("./themes.json", 'utf8', async (err, data) => {
-            themedata = JSON.parse(data);
+            themeData = JSON.parse(data);
             themename = args.join(' ').trim();
             if (themename.length > 0) {
-                if (themedata.themes.filter(t => t.name == themename).length == 0) {
+                if (themeData.themes.filter(t => t.name == themename).length == 0) {
                     getItems(message);
                 }
                 else {
@@ -101,13 +101,20 @@ function finishCreateTheme() {
     console.log("Items: " + itemobjs.map(m => "{ Item: " + m.item + ", Label: " + m.label + " } "));
 
     fs.readFile("./themes.json", 'utf8', async (err, data) => {
-        themedata = JSON.parse(data);
-        if (themedata.themes.filter(t => t.name == themename).length == 0) {
-            themedata.themes.push({
+        themeData = JSON.parse(data);
+        if (themeData.themes.filter(t => t.name == themename).length == 0) {
+            themeData.themes.push({
                 name: themename,
                 items: itemobjs,
                 colors: [],
-            })
+            });
+
+            fs.writeFile("./themes.json", JSON.stringify(themeData), 'utf8', (err) => {
+                if (err) {
+                    console.error(err);
+                }
+                message.reply("Theme " + themename + " succesfully created.");
+            });
         }
         else {
             message.reply("Theme already exists, please use a different name.");
