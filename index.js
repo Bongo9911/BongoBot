@@ -55,43 +55,44 @@ let items = [];
 
 let active = false;
 
+if (fs.existsSync("./data.json")) {
+    fs.readFile("./data.json", 'utf8', (err, data) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        let fullData = JSON.parse(data);
+        players = fullData.players;
+        kills = fullData.kills;
+        killers = fullData.killers;
+        saves = fullData.saves;
+        savers = fullData.savers;
+        history = fullData.history ?? [];
+        items = fullData.items;
+        active = fullData.active ?? false;
+
+        // let saveData = {
+        //     "items": items,
+        //     "players": players,
+        //     "kills": kills,
+        //     "killers": killers,
+        //     "saves": saves,
+        //     "savers": savers,
+        //     "history": history,
+        //     "active": active
+        // }
+        // fs.writeFile("./data.json", JSON.stringify(saveData), 'utf8', (err) => {
+        //     if (err) {
+        //         console.error(err);
+        //     }
+        // });
+    });
+}
+
 let winVoteMsg;
 
 //Command Manager
 bot.on("messageCreate", async message => {
-    if (fs.existsSync("./data.json")) {
-        fs.readFile("./data.json", 'utf8', (err, data) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
-            let fullData = JSON.parse(data);
-            players = fullData.players;
-            kills = fullData.kills;
-            killers = fullData.killers;
-            saves = fullData.saves;
-            savers = fullData.savers;
-            history = fullData.history ?? [];
-            items = fullData.items;
-            active = fullData.active ?? false;
-    
-            // let saveData = {
-            //     "items": items,
-            //     "players": players,
-            //     "kills": kills,
-            //     "killers": killers,
-            //     "saves": saves,
-            //     "savers": savers,
-            //     "history": history,
-            //     "active": active
-            // }
-            // fs.writeFile("./data.json", JSON.stringify(saveData), 'utf8', (err) => {
-            //     if (err) {
-            //         console.error(err);
-            //     }
-            // });
-        });
-    }
     //Check if author is a bot or the message was sent in dms and return
     if (message.author.bot) return;
     if (message.channel.type === "dm") return;
