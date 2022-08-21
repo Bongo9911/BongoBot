@@ -10,10 +10,10 @@ let emojis = [];
 exports.run = async (bot, message, args) => {
     if (fs.existsSync("./themes.json")) {
         fs.readFile("./themes.json", 'utf8', async (err, data) => {
-            themes = JSON.parse(data);
+            themedata = JSON.parse(data);
             themename = args.join(' ').trim();
             if (themename.length > 0) {
-                if (themes.filter(t => t.name == themename).length == 0) {
+                if (themedata.themes.filter(t => t.name == themename).length == 0) {
                     getItems(message);
                 }
                 else {
