@@ -10,11 +10,6 @@ exports.run = async (bot, message, args) => {
             if (themes.length) {
                 themeList = "";
 
-                // themes.forEach((t, i) => {
-                //     themeList += "(" + t.label + ") " + (t.emoji ? t.emoji + " " : "") + t.item + (themeData.colors.length ? " - " + themeData.colors[i] : "")
-                //         + (i == themes.length - 1 ? " " : "\n");
-                // })
-
                 themes.forEach((t, i) => {
                     themeList += "**" + t.name + "** - " + t.items.length + " Items" + (i == themes.length - 1 ? " " : "\n");
                 })
