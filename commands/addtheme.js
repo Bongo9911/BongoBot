@@ -67,13 +67,13 @@ function getIDs(message) {
                 let message = messages.first();
                 if (message.content.toUpperCase() === "NO") {
                     ids = Array.from({ length: items.length }, (_, i) => (i + 1).toString());
-                    finishCreateTheme();
+                    finishCreateTheme(message);
                 }
                 else {
                     ids = message.content.split(/\r?\n/).filter(m => m.length);
                     if (ids.length === items.length) {
                         console.log(ids);
-                        finishCreateTheme();
+                        finishCreateTheme(message);
                     }
                     else {
                         message.reply("Invalid number of ids provided. Must equal number of items (" + items.length + ").");
@@ -89,7 +89,7 @@ function getIDs(message) {
         });
 }
 
-function finishCreateTheme() {
+function finishCreateTheme(message) {
     let itemobjs = [];
     for (let i = 0; i < items.length; ++i) {
         itemobjs.push({
