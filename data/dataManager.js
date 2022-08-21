@@ -31,14 +31,14 @@ module.exports =  class DataManager {
                     return;
                 }
                 this.fullData = JSON.parse(data);
-                this.players = fullData.players;
-                this.kills = fullData.kills;
-                this.killers = fullData.killers;
-                this.saves = fullData.saves;
-                this.savers = fullData.savers;
-                this.history = fullData.history ?? [];
-                this.items = fullData.items;
-                this.active = fullData.active ?? false;
+                this.players = this.fullData.players;
+                this.kills = this.fullData.kills;
+                this.killers = this.fullData.killers;
+                this.saves = this.fullData.saves;
+                this.savers = this.fullData.savers;
+                this.history = this.fullData.history ?? [];
+                this.items = this.fullData.items;
+                this.active = this.fullData.active ?? false;
             });
         }
     }
