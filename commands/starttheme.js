@@ -38,7 +38,7 @@ function startTheme(message) {
         fs.readFile("./data.json", 'utf8', async (err, data) => {
             let fullData = JSON.parse(data);
             if (!fullData.active) {
-
+                let filter = m => m.author.id === message.author.id
                 message.reply("How many points should each item start with?").then(() => {
                     message.channel.awaitMessages({
                         filter,
