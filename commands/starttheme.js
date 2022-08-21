@@ -62,6 +62,9 @@ function startTheme() {
                                 })
                             })
                             fullData.items = items;
+                            fullData.active = true;
+
+                            message.reply("Starting theme: " + themes[themeIndex].name);
                         }
                         else {
                             message.reply("Points must be greater than 0.");
