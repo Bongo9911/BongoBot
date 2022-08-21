@@ -33,7 +33,7 @@ exports.run = async (bot, message, args) => {
     }
 }
 
-function startTheme() {
+function startTheme(message) {
     if (fs.existsSync("./data.json")) {
         fs.readFile("./data.json", 'utf8', async (err, data) => {
             let fullData = JSON.parse(data);
