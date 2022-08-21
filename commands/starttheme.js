@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const fs = require("fs");
-const { default: DataManager } = require('../data/dataManager');
+const DataManager = require('../data/dataManager');
 
 let themes = [];
 let themename = "";

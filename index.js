@@ -8,7 +8,7 @@ const bot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MES
 const fs = require("fs");
 
 const { MessageEmbed } = require('discord.js');
-const { default: DataManager } = require('./data/dataManager');
+const DataManager = require('./data/dataManager');
 
 // var CronJob = require('cron').CronJob;
 

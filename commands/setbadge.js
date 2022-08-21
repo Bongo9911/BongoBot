@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const fs = require("fs");
-const { default: DataManager } = require('../data/dataManager');
+const DataManager = require('../data/dataManager');
 
 let dm = DataManager.getInstance();
 
@@ -34,7 +34,7 @@ exports.run = async (bot, message, args) => {
                         }
                     })
                     console.log(fullData.players.filter(p => p.id == message.author.id));
-                    
+
                     dm.saveData(fullData);
                     message.reply("Featured badge successfully set");
                 }
