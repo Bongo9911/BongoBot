@@ -84,9 +84,6 @@ function getIDs(message) {
                 message.reply('Request Timed Out');
             });
         })
-        .catch(collected => {
-            message.reply('Request Timed Out');
-        });
 }
 
 function finishCreateTheme(message) {

@@ -95,6 +95,8 @@ let history = [];
 
 let items = [];
 
+let active = false;
+
 if (fs.existsSync("./data.json")) {
     fs.readFile("./data.json", 'utf8', (err, data) => {
         if (err) {
@@ -109,6 +111,7 @@ if (fs.existsSync("./data.json")) {
         savers = fullData.savers;
         history = fullData.history ?? [];
         items = fullData.items;
+        active = fullData.active ?? false;
 
         finishers = ["466649841779474452",
             "429033918079959040",
@@ -132,6 +135,7 @@ if (fs.existsSync("./data.json")) {
             "saves": saves,
             "savers": savers,
             "history": history,
+            "active": active
         }
         fs.writeFile("./data.json", JSON.stringify(saveData), 'utf8', (err) => {
             if (err) {

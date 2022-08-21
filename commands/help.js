@@ -17,8 +17,7 @@ exports.run = async (bot, message, args) => {
                     "`b.killboard` - Lists the players with the most kills\n`b.saveboard` - Lists the players with the most saves", inline: true
             },
         )
-
-    helpEmbed.setTimestamp()
+        .setTimestamp()
         .setFooter({ text: 'Command b.help', iconURL: 'https://i.imgur.com/kk9lhk3.png' });
 
     message.reply({ embeds: [helpEmbed] });
