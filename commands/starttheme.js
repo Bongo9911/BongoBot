@@ -64,7 +64,12 @@ function startTheme(message) {
                             fullData.items = items;
                             fullData.active = true;
 
-                            message.reply("Starting theme: " + themes[themeIndex].name);
+                            fs.writeFile("./data.json", JSON.stringify(fullData), 'utf8', (err) => {
+                                if (err) {
+                                    console.error(err);
+                                }
+                                message.reply("Starting theme: " + themes[themeIndex].name);
+                            });
                         }
                         else {
                             message.reply("Points must be greater than 0.");
