@@ -18,6 +18,7 @@ exports.run = async (bot, message, args) => {
             ids: ids[i]
         })
     }
+    console.log("Items: " + itemobjs);
 }
 
 function getItems(message) {
