@@ -28,6 +28,7 @@ function getItems(message) {
             time: 30000,
             errors: ['time']
         }).then(messages => {
+            console.log("Add theme test");
             let message = messages.first()
             items = message.content.split(/\r?\n/).filter(m => m.length);
             if (items.length > 2) {
