@@ -98,7 +98,7 @@ function getIDs(message) {
 
 function getEmojis(message) {
     let filter = m => m.author.id === message.author.id
-    message.reply("Would you like to add custom emojis for these items?" +
+    message.reply("Would you like to add custom emojis for these items? (Note: Emojis must be default or from a server the bot is in)" +
         "\nIf yes, reply with a list of emojis, if no, reply 'NO'").then(() => {
             message.channel.awaitMessages({
                 filter,
