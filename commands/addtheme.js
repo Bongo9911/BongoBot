@@ -82,7 +82,7 @@ function finishCreateTheme() {
             label: ids[i]
         })
     }
-    console.log("Items: " + itemobjs.map(m => "Name: " + m.name + ", Label: " + m.label));
+    console.log("Items: " + itemobjs.map(m => "Item: " + m.item + ", Label: " + m.label));
 }
 
 exports.help = {
