@@ -31,6 +31,7 @@ function getItems(message) {
             let message = messages.first()
             items = message.content.split(/\r?\n/).filter(m => m.length);
             if (items.length > 2) {
+                console.log(items);
                 getIDs(message);
             }
             else {
@@ -58,7 +59,7 @@ function getIDs(message) {
                 else {
                     ids = message.content.split(/\r?\n/).filter(m => m.length);
                     if (ids.length === items.length) {
-
+                        console.log(ids);
                     }
                     else {
                         message.reply("Invalid number of is provided. Must equal number of items (" + items.length + "). Aborting...");
