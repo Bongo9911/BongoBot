@@ -141,7 +141,6 @@ if (fs.existsSync("./data.json")) {
     });
 }
 
-let endgame = false;
 let winVoteMsg;
 
 //Command Manager
@@ -158,7 +157,7 @@ bot.on("messageCreate", async message => {
     let errors = "";
 
     let valid = true;
-    if ((cmd.startsWith("-") || cmd.startsWith("+")) && !endgame &&
+    if ((cmd.startsWith("-") || cmd.startsWith("+")) && items.filter(m => m.points > 0).length > 2 &&
         message.content.indexOf("+") != -1 && message.content.indexOf("-") != -1 &&
         (message.channel.id == 980960076686848030 || message.channel.id == 389594279758135317)) {
 
@@ -332,7 +331,6 @@ bot.on("messageCreate", async message => {
             }
 
             if (totalNonzero == 2) {
-                endgame = true;
                 nonZeroItems = [];
                 for (let i = 0; i < items.length; ++i) {
                     if (items[i].points > 0) {

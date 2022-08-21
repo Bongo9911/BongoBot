@@ -65,7 +65,7 @@ function getIDs(message) {
                         console.log(ids);
                     }
                     else {
-                        message.reply("Invalid number of is provided. Must equal number of items (" + items.length + "). Aborting...");
+                        message.reply("Invalid number of ids provided. Must equal number of items (" + items.length + "). Aborting...");
                     }
                 }
             }).catch(collected => {
