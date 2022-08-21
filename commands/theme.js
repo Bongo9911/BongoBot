@@ -13,9 +13,9 @@ exports.run = async (bot, message, args) => {
                 theme = themes[themeIndex];
 
                 itemList = "";
-                theme.itemes.forEach((m, i) => {
+                theme.items.forEach((m, i) => {
                     itemList += "(" + m.label + ") " + (m.emoji ? m.emoji + " " : "") + m.item + (theme.colors.length ? " - " + theme.colors[i] : "")
-                        + (i == theme.itemes.length - 1 ? " " : "\n");
+                        + (i == theme.items.length - 1 ? " " : "\n");
                 })
 
                 const themeEmbed = new MessageEmbed()
