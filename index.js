@@ -263,20 +263,6 @@ bot.on("messageCreate", async message => {
                     }
                 }
 
-                // let time = new Date(new Date().getTime() + (1000 * 60 * 60 * 12));
-                // let schedule = time.getMinutes() + " " + time.getHours() + " " + time.getDay() + " * * *";
-
-                // var job = new CronJob(
-                //     schedule,
-                //     function() {
-                //         console.log('Voting ended');
-                //         job.stop();
-                //     },
-                //     null,
-                //     true,
-                //     'America/Detroit'
-                // );
-
                 //"You can send another message <t:" + (Math.ceil(player.lastMsg / 1000) + (items.filter(p => p.points > 0).length <= 5 ? 1800 : 3600)) + ":R>."
                 winVoteMsg = await message.channel.send("**<@&983347003176132608>\nFINAL TWO:**\n(react to vote)\n" +
                     "Voting ends <t:" + ((new Date().getTime() + (1000 * 60 * 60 * 12))/60000) + ":R>\n" +
