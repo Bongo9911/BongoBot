@@ -1,4 +1,4 @@
-export default class DataManager {
+module.exports =  class DataManager {
     static myInstance = null;
 
     static fullData = {};
