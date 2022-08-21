@@ -8,9 +8,24 @@ let emojis = [];
 
 
 exports.run = async (bot, message, args) => {
-    themename = args.join(' ');
-    getItems(message);
-    //TODO: Add ability to add custom colors or emojis
+    if (fs.existsSync("./themes.json")) {
+        fs.readFile("./themes.json", 'utf8', async (err, data) => {
+            themes = JSON.parse(data);
+            themename = args.join(' ').trim();
+            if (themename.length > 0) {
+                if (themes.filter(t => t.name == themename).length == 0) {
+                    getItems(message);
+                }
+                else {
+                    message.reply("Theme already exists, please use a different name.");
+                }
+            }
+            else {
+                message.reply("No theme name provided, please use syntax b.addtheme <Theme Name>.");
+            }
+            //TODO: Add ability to add custom colors or emojis
+        });
+    }
 }
 
 function getItems(message) {
@@ -51,7 +66,7 @@ function getIDs(message) {
             }).then(messages => {
                 let message = messages.first();
                 if (message.content.toUpperCase() === "NO") {
-                    ids = Array.from({length: items.length}, (_, i) => i + 1);
+                    ids = Array.from({ length: items.length }, (_, i) => (i + 1).toString());
                     finishCreateTheme();
                 }
                 else {
@@ -76,13 +91,28 @@ function getIDs(message) {
 
 function finishCreateTheme() {
     let itemobjs = [];
-    for(let i = 0; i < items.length; ++i) {
+    for (let i = 0; i < items.length; ++i) {
         itemobjs.push({
             item: items[i],
-            label: ids[i]
+            label: ids[i],
+            emoji: null
         })
     }
-    console.log("Items: " + itemobjs.map(m => "Item: " + m.item + ", Label: " + m.label));
+    console.log("Items: " + itemobjs.map(m => "{ Item: " + m.item + ", Label: " + m.label + " } "));
+
+    fs.readFile("./themes.json", 'utf8', async (err, data) => {
+        themedata = JSON.parse(data);
+        if (themedata.themes.filter(t => t.name == themename).length == 0) {
+            themedata.themes.push({
+                name: themename,
+                items: itemobjs,
+                colors: [],
+            })
+        }
+        else {
+            message.reply("Theme already exists, please use a different name.");
+        }
+    });
 }
 
 exports.help = {
