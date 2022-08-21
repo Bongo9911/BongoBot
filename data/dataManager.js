@@ -23,7 +23,7 @@ module.exports =  class DataManager {
         return this.myInstance;
     }
 
-    static updateData() {
+    updateData() {
         if (fs.existsSync("./data.json")) {
             fs.readFile("./data.json", 'utf8', (err, data) => {
                 if (err) {
@@ -43,11 +43,11 @@ module.exports =  class DataManager {
         }
     }
 
-    static getData() {
+    getData() {
         return this.fullData;
     }
 
-    static saveData(data) {
+    saveData(data) {
         this.fullData = data;
         this.players = data.players;
         this.kills = data.kills;
