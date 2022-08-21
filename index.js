@@ -357,7 +357,6 @@ bot.on("messageCreate", async message => {
 
         const pointsEmbed = new MessageEmbed()
             .setColor('#0099ff');
-        // .setTitle("Points");
 
         for (let i = 0; i < columns; ++i) {
             let pointCol = "";
@@ -370,6 +369,7 @@ bot.on("messageCreate", async message => {
             else {
                 pointsEmbed.addField("\u200b", pointCol, true);
             }
+            console.log(pointCol);
         }
         message.reply({ embeds: [pointsEmbed] });
     }
