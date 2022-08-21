@@ -1,11 +1,11 @@
 const { MessageEmbed } = require('discord.js');
+const fs = require("fs");
 
 let themename = "";
 let items = [];
 let ids = [];
 let colors = [];
 let emojis = [];
-
 
 exports.run = async (bot, message, args) => {
     if (fs.existsSync("./themes.json")) {

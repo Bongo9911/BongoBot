@@ -2,3 +2,4 @@ node_modules/*
 points.txt
 data.json
 .env
+themes.json
