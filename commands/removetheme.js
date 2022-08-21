@@ -36,9 +36,14 @@ function confirmRemoveTheme(message) {
             if (message.content.toUpperCase() == "YES") {
                 fs.readFile("./themes.json", 'utf8', async (err, data) => {
                     let themeData = JSON.parse(data);
-                    if(themeData.themes.filter(t => t.name.toLowerCase() == themename.toLowerCase()).length == 1) {
+                    if (themeData.themes.filter(t => t.name.toLowerCase() == themename.toLowerCase()).length == 1) {
                         themeData.themes.splice(themeData.themes.map(t => t.name.toLowerCase()).indexOf(themename.toLowerCase()), 1);
-                        message.reply("Theme " + themename + " successfully removed.");
+                        fs.writeFile("./themes.json", JSON.stringify(themeData), 'utf8', (err) => {
+                            if (err) {
+                                console.error(err);
+                            }
+                            message.reply("Theme " + themename + " successfully removed.");
+                        });
                     }
                     else {
                         message.reply("Theme " + themename + " not found. Maybe someone else already removed it?");
