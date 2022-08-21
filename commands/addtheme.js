@@ -13,7 +13,7 @@ exports.run = async (bot, message, args) => {
             themeData = JSON.parse(data);
             themename = args.join(' ').trim();
             if (themename.length > 0) {
-                if (themeData.themes.filter(t => t.name == themename).length == 0) {
+                if (themeData.themes.filter(t => t.name.toLowerCase() == themename.toLowerCase()).length == 0) {
                     getItems(message);
                 }
                 else {
@@ -99,7 +99,7 @@ function finishCreateTheme(message) {
 
     fs.readFile("./themes.json", 'utf8', async (err, data) => {
         themeData = JSON.parse(data);
-        if (themeData.themes.filter(t => t.name == themename).length == 0) {
+        if (themeData.themes.filter(t => t.name.toLowerCase() == themename.toLowerCase()).length == 0) {
             themeData.themes.push({
                 name: themename,
                 items: itemobjs,
