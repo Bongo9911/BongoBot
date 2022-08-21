@@ -15,7 +15,7 @@ module.exports =  class DataManager {
     static getInstance() {
         if (DataManager.myInstance == null) {
             DataManager.myInstance = new DataManager();
-            this.myInstance.updateData();
+            DataManager.updateData();
         }
 
         return this.myInstance;
