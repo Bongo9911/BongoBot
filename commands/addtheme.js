@@ -23,7 +23,8 @@ exports.run = async (bot, message, args) => {
 function getItems(message) {
     let filter = m => m.author.id === message.author.id
     message.reply("What items should be in theme '" + themename + "'?\nPlease reply with a list of items separated by newlines.").then(() => {
-        message.channel.awaitMessages(filter, {
+        message.channel.awaitMessages({
+            filter,
             max: 1,
             time: 30000,
             errors: ['time']
@@ -48,7 +49,8 @@ function getIDs(message) {
     let filter = m => m.author.id === message.author.id
     message.reply("Would you like to add custom IDs for these items? If not they will be assigned numbers from 1 to " + items.length +
         "\nIf yes, reply with a list of IDs, if no, reply 'NO'").then(() => {
-            message.channel.awaitMessages(filter, {
+            message.channel.awaitMessages({
+                filter,
                 max: 1,
                 time: 30000,
                 errors: ['time']
