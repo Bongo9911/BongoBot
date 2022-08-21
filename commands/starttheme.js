@@ -53,6 +53,7 @@ function startTheme(message) {
                         let points = parseInt(message.content);
                         if (points > 0) {
                             let items = [];
+                            fullData.history = [];
                             themes[themeIndex].items.forEach(m => {
                                 items.push({
                                     item: m.item,
@@ -63,9 +64,14 @@ function startTheme(message) {
                                     points: points,
                                     savetime: 0
                                 })
+                                fullData.history.push([points]);
                             })
                             fullData.items = items;
                             fullData.active = true;
+                            fullData.saves = [];
+                            fullData.savers = [];
+                            fullData.kills = [];
+                            fullData.killers = [];
 
                             dm.saveData(fullData);
                             message.reply("Starting theme: " + themes[themeIndex].name);
