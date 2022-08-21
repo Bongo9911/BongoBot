@@ -112,20 +112,7 @@ if (fs.existsSync("./data.json")) {
         history = fullData.history ?? [];
         items = fullData.items;
         active = fullData.active ?? false;
-
-        finishers = ["466649841779474452",
-            "429033918079959040",
-            "624238518364930068",
-            "325326133157691393",
-            "311226074140770306",]
-
-        players.forEach(p => {
-            if(finishers.indexOf(p.id) != -1) {
-                while(p.badges.filter(b => b == "Finishing Blow").length > 1) {
-                    p.badges.splice(p.badges.indexOf("Finishing Blow"), 1);
-                }
-            }
-        });
+        admins = fullData.admins ?? ["200313450319052801"];
 
         let saveData = {
             "items": items,
@@ -387,8 +374,9 @@ bot.on("messageCreate", async message => {
                 "saves": saves,
                 "savers": savers,
                 "history": history,
-                "emojis": emojis,
+                "active": active,
             }
+
             fs.writeFile("./data.json", JSON.stringify(data), 'utf8', (err) => {
                 if (err) {
                     console.error(err);

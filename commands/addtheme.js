@@ -9,21 +9,31 @@ let emojis = [];
 
 exports.run = async (bot, message, args) => {
     if (fs.existsSync("./themes.json")) {
-        fs.readFile("./themes.json", 'utf8', async (err, data) => {
-            themeData = JSON.parse(data);
-            themename = args.join(' ').trim();
-            if (themename.length > 0) {
-                if (themeData.themes.filter(t => t.name.toLowerCase() == themename.toLowerCase()).length == 0) {
-                    getItems(message);
-                }
-                else {
-                    message.reply("Theme already exists, please use a different name.");
-                }
+        fs.readFile("./themes.json", 'utf8', async (err, tdata) => {
+            if (fs.existsSync("./settings.json")) {
+                fs.readFile("./settings.json", 'utf8', async (err, sdata) => {
+                    themeData = JSON.parse(tdata);
+                    settingsData = JSON.parse(sdata);
+                    if (settingsData.indexOf(message.author.id) !== -1) {
+                        themename = args.join(' ').trim();
+                        if (themename.length > 0) {
+                            if (themeData.themes.filter(t => t.name.toLowerCase() == themename.toLowerCase()).length == 0) {
+                                getItems(message);
+                            }
+                            else {
+                                message.reply("Theme already exists, please use a different name.");
+                            }
+                        }
+                        else {
+                            message.reply("No theme name provided, please use syntax b.addtheme <Theme Name>.");
+                        }
+                        //TODO: Add ability to add custom colors or emojis
+                    }
+                    else {
+                        message.reply("Only admins can perform this action.");
+                    }
+                });
             }
-            else {
-                message.reply("No theme name provided, please use syntax b.addtheme <Theme Name>.");
-            }
-            //TODO: Add ability to add custom colors or emojis
         });
     }
 }

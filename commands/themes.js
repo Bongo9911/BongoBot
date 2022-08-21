@@ -7,25 +7,30 @@ exports.run = async (bot, message, args) => {
             themeData = JSON.parse(data);
             themes = themeData.themes.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
 
-            themeList = "";
+            if (themes.length) {
+                themeList = "";
 
-            // themes.forEach((t, i) => {
-            //     themeList += "(" + t.label + ") " + (t.emoji ? t.emoji + " " : "") + t.item + (themeData.colors.length ? " - " + themeData.colors[i] : "")
-            //         + (i == themes.length - 1 ? " " : "\n");
-            // })
+                // themes.forEach((t, i) => {
+                //     themeList += "(" + t.label + ") " + (t.emoji ? t.emoji + " " : "") + t.item + (themeData.colors.length ? " - " + themeData.colors[i] : "")
+                //         + (i == themes.length - 1 ? " " : "\n");
+                // })
 
-            themes.forEach((t, i) => {
-                themeList += "**" + t.name + "** - " + t.items.length + " Items" + (i == themes.length - 1 ? " " : "\n");
-            })
+                themes.forEach((t, i) => {
+                    themeList += "**" + t.name + "** - " + t.items.length + " Items" + (i == themes.length - 1 ? " " : "\n");
+                })
 
-            const themesEmbed = new MessageEmbed()
-                .setColor('#0099ff')
-                .setTitle("Themes")
-                .setDescription(themeList)
-                .setTimestamp()
-                .setFooter({ text: 'Command b.themes', iconURL: 'https://i.imgur.com/kk9lhk3.png' });
+                const themesEmbed = new MessageEmbed()
+                    .setColor('#0099ff')
+                    .setTitle("Themes")
+                    .setDescription(themeList)
+                    .setTimestamp()
+                    .setFooter({ text: 'Command b.themes', iconURL: 'https://i.imgur.com/kk9lhk3.png' });
 
-            message.reply({ embeds: [themesEmbed] });
+                message.reply({ embeds: [themesEmbed] });
+            }
+            else {
+                message.reply("No themes found.");
+            }
         });
     }
 }
