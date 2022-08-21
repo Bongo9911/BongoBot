@@ -10,7 +10,7 @@ exports.run = async (bot, message, args) => {
                 fs.readFile("./settings.json", 'utf8', async (err, sdata) => {
                     themeData = JSON.parse(tdata);
                     settingsData = JSON.parse(sdata);
-                    if (settingsData.indexOf(message.author.id) !== -1) {
+                    if (settingsData.admins.indexOf(message.author.id) !== -1) {
                         themename = args.join(' ').trim();
                         if (themename.length > 0) {
                             if (themeData.themes.filter(t => t.name.toLowerCase() == themename.toLowerCase()).length != 0) {
