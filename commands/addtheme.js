@@ -11,14 +11,6 @@ exports.run = async (bot, message, args) => {
     themename = args.join(' ');
     getItems(message);
     //TODO: Add ability to add custom colors or emojis
-    let itemobjs = [];
-    for(let i = 0; i < items.length; ++i) {
-        itemobjs.push({
-            item: items[i],
-            ids: ids[i]
-        })
-    }
-    console.log("Items: " + itemobjs);
 }
 
 function getItems(message) {
@@ -39,6 +31,7 @@ function getItems(message) {
             }
             else {
                 message.reply("Invalid number of items provided. Must have at least 3.");
+                getItems(message);
             }
         }).catch(collected => {
             message.reply('Request Timed Out');
@@ -58,15 +51,18 @@ function getIDs(message) {
             }).then(messages => {
                 let message = messages.first();
                 if (message.content.toUpperCase() === "NO") {
-                    ids = Array.from({length: items.length}, (_, i) => i + 1)
+                    ids = Array.from({length: items.length}, (_, i) => i + 1);
+                    finishCreateTheme();
                 }
                 else {
                     ids = message.content.split(/\r?\n/).filter(m => m.length);
                     if (ids.length === items.length) {
                         console.log(ids);
+                        finishCreateTheme();
                     }
                     else {
-                        message.reply("Invalid number of ids provided. Must equal number of items (" + items.length + "). Aborting...");
+                        message.reply("Invalid number of ids provided. Must equal number of items (" + items.length + ").");
+                        getIDs(message);
                     }
                 }
             }).catch(collected => {
@@ -76,6 +72,17 @@ function getIDs(message) {
         .catch(collected => {
             message.reply('Request Timed Out');
         });
+}
+
+function finishCreateTheme() {
+    let itemobjs = [];
+    for(let i = 0; i < items.length; ++i) {
+        itemobjs.push({
+            item: items[i],
+            ids: ids[i]
+        })
+    }
+    console.log("Items: " + itemobjs);
 }
 
 exports.help = {
