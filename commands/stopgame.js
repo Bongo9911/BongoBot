@@ -27,6 +27,7 @@ exports.run = async (bot, message, args) => {
                             if (message.content.toUpperCase() == "YES") {
                                 data.active = false;
                                 dm.saveData(data);
+                                message.reply("Game stopped");
                             }
                             else {
                                 message.reply('Request Cancelled');
