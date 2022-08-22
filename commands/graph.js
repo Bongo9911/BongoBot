@@ -53,6 +53,9 @@ exports.run = async (bot, message, args) => {
 
             let datasets = [];
 
+            console.log(items[0]);
+            console.log(items[0].color);
+
             for (let i = 0; i < items.length; ++i) {
                 datasets.push({
                     label: items[i].item, data: history[i],
