@@ -61,6 +61,7 @@ function startTheme(message) {
                                     label: m.label,
                                     labellower: m.label.toLowerCase(),
                                     emoji: m.emoji,
+                                    color: m.color,
                                     points: points,
                                     savetime: 0
                                 })

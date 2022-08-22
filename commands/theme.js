@@ -35,7 +35,7 @@ exports.run = async (bot, message, args) => {
 }
 
 function componentToHex(c) {
-    var hex = c.toString(16);
+    var hex = c.toString(16).toUpperCase();
     return hex.length == 1 ? "0" + hex : hex;
 }
 
