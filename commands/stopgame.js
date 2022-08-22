@@ -24,7 +24,7 @@ exports.run = async (bot, message, args) => {
                             errors: ['time']
                         }).then(messages => {
                             let message = messages.first();
-                            if (message.content.toUpperCase() == "Yes") {
+                            if (message.content.toUpperCase() == "YES") {
                                 data.active = false;
                                 dm.saveData(data);
                             }
