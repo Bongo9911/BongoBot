@@ -108,17 +108,64 @@ function getEmojis(message) {
             }).then(messages => {
                 let message = messages.first();
                 if (message.content.toUpperCase() === "NO") {
-                    finishCreateTheme(message);
+                    getColors(message);
                 }
                 else {
                     emojis = message.content.split(/\r?\n/).filter(m => m.length);
                     if (emojis.length === items.length) {
                         console.log(emojis);
-                        finishCreateTheme(message);
+                        getColors(message);
                     }
                     else {
                         message.reply("Invalid number of emojis provided. Must equal number of items (" + items.length + ").");
                         getEmojis(message);
+                    }
+                }
+            }).catch(collected => {
+                message.reply('Request Timed Out');
+            });
+        })
+}
+
+function getColors(message) {
+    let filter = m => m.author.id === message.author.id
+    message.reply("Would you like to add custom colors for these items for graphing?" +
+        "\nIf yes, reply with a list of hex colors, if no, reply 'NO'").then(() => {
+            message.channel.awaitMessages({
+                filter,
+                max: 1,
+                time: 30000,
+                errors: ['time']
+            }).then(messages => {
+                let message = messages.first();
+                if (message.content.toUpperCase() === "NO") {
+                    finishCreateTheme(message);
+                }
+                else {
+                    hexcolors = message.content.split(/\r?\n/).filter(m => m.length);
+                    if (hexcolors.length === items.length) {
+                        console.log(hexcolors);
+                        rgbcolors = [];
+                        let valid = true;
+                        for(let i = 0; i < hexcolors.length; ++i) {
+                            let rgb = hexToRgb(hexcolors[i]);
+                            if(rgb) {
+                                rgbcolors.push(rgb);
+                            }
+                            else {
+                                valid = false;
+                                message.reply("Invalid hex code: " + hexcolors[i]);
+                                getColors(message);
+                            }
+                        }
+                        if(valid) {
+                            colors = rgbcolors;
+                            finishCreateTheme(message);
+                        }
+                    }
+                    else {
+                        message.reply("Invalid number of colors provided. Must equal number of items (" + items.length + ").");
+                        getColors(message);
                     }
                 }
             }).catch(collected => {
@@ -158,6 +205,15 @@ function finishCreateTheme(message) {
             message.reply("Theme already exists, please use a different name.");
         }
     });
+}
+
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? [
+        parseInt(result[1], 16),
+        parseInt(result[2], 16),
+        parseInt(result[3], 16)
+    ] : null;
 }
 
 exports.help = {

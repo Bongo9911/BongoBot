@@ -48,20 +48,23 @@ exports.run = async (bot, message, args) => {
             console.log(err)
         } else if (args.length >= 1) {
             let fullData = JSON.parse(data);
-
-            let max = parseInt(args[0].trim());
+            let items = fullData.items;
             let history = fullData.history;
 
+            let max = parseInt(args[0].trim());
+    
             let start = history[0].length - max;
             if (start < 0) start = 0;
 
             let datasets = [];
 
-            for (let i = 0; i < fullData.items.length; ++i) {
+            for (let i = 0; i < items.length; ++i) {
                 datasets.push({
-                    label: fullData.items[i].item, data: fullData.history[i].slice(start, fullData.history[i].length),
-                    borderColor: ['rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ',' + (1 - (Math.min(i / colors.length) * 0.5)) + ')'],
-                    backgroundColor: 'rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ', 1)'
+                    label: items[i].item, data: history[i].slice(start, history[i].length),
+                    borderColor: items[i].color.length ? ['rgba(' + items[i].color[0] + "," + items[i].color[1] + "," + items[i].color[2] + ", 1)"] :
+                        ['rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ',' + (1 - (Math.min(i / colors.length) * 0.5)) + ')'],
+                    backgroundColor: items[i].color.length ? ['rgba(' + items[i].color[0] + "," + items[i].color[1] + "," + items[i].color[2] + ")"] :
+                        'rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ', 1)' //0.2
                 })
             }
 

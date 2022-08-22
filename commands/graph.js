@@ -57,16 +57,18 @@ exports.run = async (bot, message, args) => {
             console.log(err)
         } else {
             let fullData = JSON.parse(data);
+            let items = fullData.items;
+            let history = fullData.history;
 
             let datasets = [];
 
-            for (let i = 0; i < fullData.items.length; ++i) {
+            for (let i = 0; i < items.length; ++i) {
                 datasets.push({
-                    label: fullData.items[i].item, data: fullData.history[i],
-                    borderColor: [colors[i]],
-                    backgroundColor: colors[i]
-                    //borderColor: ['rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ',' + (1 - (Math.min(i/colors.length) * 0.5)) + ')'],
-                    //backgroundColor: 'rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ', 1)' //0.2
+                    label: items[i].item, data: history[i],
+                    borderColor: items[i].color.length ? ['rgba(' + items[i].color[0] + "," + items[i].color[1] + "," + items[i].color[2] + ", 1)"] :
+                        ['rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ',' + (1 - (Math.min(i / colors.length) * 0.5)) + ')'],
+                    backgroundColor: items[i].color.length ? ['rgba(' + items[i].color[0] + "," + items[i].color[1] + "," + items[i].color[2] + ")"] :
+                        'rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ', 1)' //0.2
                 })
             }
 
@@ -76,12 +78,12 @@ exports.run = async (bot, message, args) => {
                 type: "line", // Show a line chart
                 backgroundColor: "rgba(236,197,1)",
                 data: {
-                    labels: [...Array(fullData.history[0].length).keys()],
+                    labels: [...Array(history[0].length).keys()],
                     datasets: datasets
                 },
                 options: {
                     elements: {
-                        point:{
+                        point: {
                             radius: 0
                         }
                     }
