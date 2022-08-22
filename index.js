@@ -1,6 +1,6 @@
 require('dotenv').config({ debug: true });
 
-const { prefix, token } = require("./config.json");
+const { prefix } = require("./config.json");
 
 const { Client, Intents, Collection } = require('discord.js');
 const bot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS] });
@@ -9,8 +9,6 @@ const fs = require("fs");
 
 const { MessageEmbed } = require('discord.js');
 const DataManager = require('./data/dataManager');
-
-// var CronJob = require('cron').CronJob;
 
 bot.commands = new Collection();
 
@@ -53,6 +51,7 @@ let savers = [];
 let history = [];
 
 let items = [];
+let active = false;
 
 let dm = DataManager.getInstance();
 
@@ -83,7 +82,7 @@ bot.on("messageCreate", async message => {
 
     let valid = true;
     if ((cmd.startsWith("-") || cmd.startsWith("+")) && items.filter(m => m.points > 0).length > 2 &&
-        message.content.indexOf("+") != -1 && message.content.indexOf("-") != -1 &&
+        message.content.indexOf("+") != -1 && message.content.indexOf("-") != -1 && active &&
         (message.channel.id == 980960076686848030 || message.channel.id == 389594279758135317)) {
 
         let minusindex = -1;
@@ -329,7 +328,6 @@ bot.on("messageCreate", async message => {
             else {
                 pointsEmbed.addField("\u200b", pointCol, true);
             }
-            console.log(pointCol);
         }
         message.reply({ embeds: [pointsEmbed] });
     }
@@ -340,18 +338,5 @@ bot.on("messageCreate", async message => {
     }
 
 });
-
-// bot.on("ready", c => {
-//     var job = new CronJob(
-//         '* * * * * *',
-//         function() {
-//             console.log('Voting ended');
-//             job.stop();
-//         },
-//         null,
-//         true,
-//         'America/Los_Angeles'
-//     );
-// })
 
 bot.login(process.env.TOKEN);
