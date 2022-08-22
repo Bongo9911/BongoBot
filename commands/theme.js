@@ -14,7 +14,7 @@ exports.run = async (bot, message, args) => {
 
                 itemList = "";
                 theme.items.forEach((m, i) => {
-                    itemList += "(" + m.label + ") " + (m.emoji ? m.emoji + " " : "") + m.item + (theme.colors.length ? " - " + theme.colors[i] : "")
+                    itemList += "(" + m.label + ") " + (m.emoji ? m.emoji + " " : "") + m.item + (m.color.length ? " - " + rgbToHex(m.color) : "")
                         + (i == theme.items.length - 1 ? " " : "\n");
                 })
 
@@ -32,6 +32,15 @@ exports.run = async (bot, message, args) => {
             }
         });
     }
+}
+
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(color) {
+    return "#" + componentToHex(color[0]) + componentToHex(color[1]) + componentToHex(color[2]);
 }
 
 exports.help = {
