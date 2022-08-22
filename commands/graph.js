@@ -53,15 +53,12 @@ exports.run = async (bot, message, args) => {
 
             let datasets = [];
 
-            console.log(items[0]);
-            console.log(items[0].color);
-
             for (let i = 0; i < items.length; ++i) {
                 datasets.push({
                     label: items[i].item, data: history[i],
                     borderColor: items[i].color.length ? ['rgba(' + items[i].color[0] + "," + items[i].color[1] + "," + items[i].color[2] + ", 1)"] :
                         ['rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ',' + (1 - (Math.min(i / colors.length) * 0.5)) + ')'],
-                    backgroundColor: items[i].color.length ? 'rgba(' + items[i].color[0] + "," + items[i].color[1] + "," + items[i].color[2] + ")" :
+                    backgroundColor: items[i].color.length ? 'rgba(' + items[i].color[0] + "," + items[i].color[1] + "," + items[i].color[2] + ", 1)" :
                         'rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ', 1)' //0.2
                 })
             }
