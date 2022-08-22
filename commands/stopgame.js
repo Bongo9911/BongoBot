@@ -46,62 +46,6 @@ exports.run = async (bot, message, args) => {
     }
 }
 
-function startTheme(message) {
-    if (fs.existsSync("./data.json")) {
-        fs.readFile("./data.json", 'utf8', async (err, data) => {
-            let fullData = JSON.parse(data);
-            if (!fullData.active) {
-                let filter = m => m.author.id === message.author.id
-                message.reply("How many points should each item start with?").then(() => {
-                    message.channel.awaitMessages({
-                        filter,
-                        max: 1,
-                        time: 30000,
-                        errors: ['time']
-                    }).then(messages => {
-                        let message = messages.first();
-                        let points = parseInt(message.content);
-                        if (points > 0) {
-                            let items = [];
-                            fullData.history = [];
-                            themes[themeIndex].items.forEach(m => {
-                                items.push({
-                                    item: m.item,
-                                    itemlower: m.item.toLowerCase(),
-                                    label: m.label,
-                                    labellower: m.label.toLowerCase(),
-                                    emoji: m.emoji,
-                                    points: points,
-                                    savetime: 0
-                                })
-                                fullData.history.push([points]);
-                            })
-                            fullData.items = items;
-                            fullData.active = true;
-                            fullData.saves = [];
-                            fullData.savers = [];
-                            fullData.kills = [];
-                            fullData.killers = [];
-
-                            dm.saveData(fullData);
-                            message.reply("Starting theme: " + themes[themeIndex].name);
-                        }
-                        else {
-                            message.reply("Points must be greater than 0.");
-                        }
-                    }).catch(collected => {
-                        message.reply('Request Timed Out');
-                    });
-                })
-
-            }
-            else {
-                message.reply("Can't start new theme while there is an active game");
-            }
-        });
-    }
-}
-
 exports.help = {
-    name: "starttheme"
+    name: "stopgame"
 }
