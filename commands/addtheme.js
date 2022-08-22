@@ -159,6 +159,7 @@ function getColors(message) {
                             }
                         }
                         if(valid) {
+                            console.log(rgbcolors);
                             colors = rgbcolors;
                             finishCreateTheme(message);
                         }
@@ -181,7 +182,7 @@ function finishCreateTheme(message) {
             item: items[i],
             label: ids[i],
             emoji: emojis.length ? emojis[i] : null,
-            color: colors.length ? colors[i] : null
+            color: colors.length ? colors[i] : []
         })
     }
     console.log("Items: " + itemobjs.map(m => "{ Item: " + m.item + ", Label: " + m.label + " } "));
