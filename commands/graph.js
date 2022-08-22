@@ -40,12 +40,12 @@ const fs = require("fs");
 // ]
 
 colors = [
-    "#FF0000",
-    "#00FF00",
-    "#0000FF",
-    "#FFFF00",
-    "#FF00FF",
-    "#00FFFF"
+    "FF0000",
+    "00FF00",
+    "0000FF",
+    "FFFF00",
+    "FF00FF",
+    "00FFFF"
 ]
 
 exports.run = async (bot, message, args) => {
