@@ -39,40 +39,14 @@ const fs = require("fs");
 //     [64, 64, 64],
 // ]
 
-let colors = [[247, 231, 200],
-[0, 0, 0],
-[0, 0, 255],
-[161, 56, 0],
-[255, 147, 107],
-[220, 20, 60],
-[0, 255, 255],
-[19, 112, 19],
-[247, 189, 12],
-[0, 199, 0],
-[121, 121, 121],
-[72, 11, 190],
-[230, 230, 250],
-[200, 162, 200],
-[120, 247, 0],
-[255, 0, 255],
-[117, 0, 0],
-[62, 180, 137],
-[5, 5, 103],
-[154, 137, 0],
-[255, 128, 0],
-[255, 129, 129],
-[255, 126, 195],
-[183, 14, 239],
-[255, 0, 0],
-[255, 0, 183],
-[190, 190, 190],
-[43, 161, 255],
-[205, 176, 138],
-[19, 120, 130],
-[9, 217, 134],
-[119, 6, 202],
-[240, 240, 240],
-[255, 255, 0]]
+colors = [
+    "#FF0000",
+    "#00FF00",
+    "#0000FF",
+    "#FFFF00",
+    "#FF00FF",
+    "#00FFFF"
+]
 
 exports.run = async (bot, message, args) => {
 
@@ -89,8 +63,10 @@ exports.run = async (bot, message, args) => {
             for (let i = 0; i < fullData.items.length; ++i) {
                 datasets.push({
                     label: fullData.items[i].item, data: fullData.history[i],
-                    borderColor: ['rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ',' + (1 - (Math.min(i/colors.length) * 0.5)) + ')'],
-                    backgroundColor: 'rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ', 1)' //0.2
+                    borderColor: [colors[i]],
+                    backgroundColor: colors[i]
+                    //borderColor: ['rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ',' + (1 - (Math.min(i/colors.length) * 0.5)) + ')'],
+                    //backgroundColor: 'rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ', 1)' //0.2
                 })
             }
 

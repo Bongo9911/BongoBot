@@ -133,7 +133,8 @@ function finishCreateTheme(message) {
         itemobjs.push({
             item: items[i],
             label: ids[i],
-            emoji: emojis.length ? emojis[i] : null
+            emoji: emojis.length ? emojis[i] : null,
+            color: colors.length ? colors[i] : null
         })
     }
     console.log("Items: " + itemobjs.map(m => "{ Item: " + m.item + ", Label: " + m.label + " } "));
@@ -144,7 +145,6 @@ function finishCreateTheme(message) {
             themeData.themes.push({
                 name: themename,
                 items: itemobjs,
-                colors: [],
             });
 
             fs.writeFile("./themes.json", JSON.stringify(themeData), 'utf8', (err) => {
