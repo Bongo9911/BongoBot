@@ -93,5 +93,5 @@ function startTheme(message) {
 }
 
 exports.help = {
-    name: "starttheme"
+    name: "startgame"
 }
