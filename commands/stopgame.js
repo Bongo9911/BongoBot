@@ -16,6 +16,7 @@ exports.run = async (bot, message, args) => {
                 let data = dm.getData();
                 if (data.active) {
                     message.reply("Are you sure you want to end the current game?\nReply 'Yes' or 'No'.").then(() => {
+                        let filter = m => m.author.id === message.author.id
                         message.channel.awaitMessages({
                             filter,
                             max: 1,
