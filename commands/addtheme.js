@@ -108,6 +108,7 @@ function getEmojis(message) {
             }).then(messages => {
                 let message = messages.first();
                 if (message.content.toUpperCase() === "NO") {
+                    emojis = [];
                     getColors(message);
                 }
                 else {
@@ -139,6 +140,7 @@ function getColors(message) {
             }).then(messages => {
                 let message = messages.first();
                 if (message.content.toUpperCase() === "NO") {
+                    colors = [];
                     finishCreateTheme(message);
                 }
                 else {
