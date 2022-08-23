@@ -57,9 +57,9 @@ function startTheme(message) {
                             themes[themeIndex].items.forEach(m => {
                                 items.push({
                                     item: m.item,
-                                    itemlower: m.item.toLowerCase(),
+                                    itemLower: m.item.toLowerCase(),
                                     label: m.label,
-                                    labellower: m.label.toLowerCase(),
+                                    labelLower: m.label.toLowerCase(),
                                     emoji: m.emoji,
                                     color: m.color,
                                     points: points,
