@@ -16,7 +16,7 @@ const commandFiles = fs.readdirSync('./commands/').filter(f => f.endsWith('.js')
 for (const file of commandFiles) {
     const props = require(`./commands/${file}`)
     console.log(`${file} loaded`)
-    bot.commands.set(props.help.name, props)
+    props.help.name.forEach(name => bot.commands.set(name, props));
 }
 
 const commandSubFolders = fs.readdirSync('./commands/').filter(f => !f.endsWith('.js'))
@@ -220,8 +220,8 @@ bot.on("messageCreate", async message => {
 
             let nonZeroItems = items.filter((m, i) => m.points > 0 || (m.points == 0 && i == minusindex));
 
-            let columns = Math.max(nonZeroItems.length / 25);
-            let perColumn = Math.max(nonZeroItems.length / columns);
+            let columns = Math.ceil(nonZeroItems.length / 25);
+            let perColumn = Math.ceil(nonZeroItems.length / columns);
 
             const pointsEmbed = new MessageEmbed()
                 .setColor('#0099ff')
@@ -317,8 +317,8 @@ bot.on("messageCreate", async message => {
     if (cmd.startsWith("b.points")) {
         let nonZeroItems = items.filter(m => m.points > 0);
 
-        let columns = Math.max(nonZeroItems.length / 25);
-        let perColumn = Math.max(nonZeroItems.length / columns);
+        let columns = Math.ceil(nonZeroItems.length / 25);
+        let perColumn = Math.ceil(nonZeroItems.length / columns);
 
         const pointsEmbed = new MessageEmbed()
             .setColor('#0099ff');

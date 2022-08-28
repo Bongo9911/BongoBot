@@ -31,5 +31,5 @@ exports.run = async (bot, message, args) => {
 }
 
 exports.help = {
-    name: "themes"
+    name: ["themes", "ts"]
 }

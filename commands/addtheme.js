@@ -220,5 +220,5 @@ function hexToRgb(hex) {
 }
 
 exports.help = {
-    name: "addtheme"
+    name: ["addtheme", "at"]
 }

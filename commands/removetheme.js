@@ -70,5 +70,5 @@ function confirmRemoveTheme(message) {
 }
 
 exports.help = {
-    name: "removetheme"
+    name: ["removetheme", "rt"]
 }

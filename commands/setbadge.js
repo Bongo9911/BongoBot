@@ -50,5 +50,5 @@ exports.run = async (bot, message, args) => {
 }
 
 exports.help = {
-    name: "setbadge"
+    name: ["setbadge", "setb"]
 }

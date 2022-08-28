@@ -44,5 +44,5 @@ function rgbToHex(color) {
 }
 
 exports.help = {
-    name: "theme"
+    name: ["theme", "t"]
 }

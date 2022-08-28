@@ -34,7 +34,7 @@ exports.run = async (bot, message, args) => {
 }
 
 exports.help = {
-    name: "killboard"
+    name: ["killboard", "kb"]
 }
 
 function getRankString(n) {

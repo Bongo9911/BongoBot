@@ -50,5 +50,5 @@ exports.run = async (bot, message, args) => {
 }
 
 exports.help = {
-    name: "kills"
+    name: ["kills", "k"]
 }
