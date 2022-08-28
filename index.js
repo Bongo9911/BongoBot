@@ -213,10 +213,6 @@ bot.on("messageCreate", async message => {
         if (valid) {
             let player = players.filter(p => p.id === message.author.id)[0];
 
-            for (let p = 0; p < items.length; ++p) {
-                history[p].push(items[p].points);
-            }
-
             if (totalNonzero == 2 && player.badges.indexOf("Finishing Blow") == -1) {
                 player.badges.push("Finishing Blow");
                 message.reply("Badge Awarded! :boom: **Finishing Blow**");
@@ -247,6 +243,16 @@ bot.on("messageCreate", async message => {
                     pointsEmbed.addField("\u200b", pointCol, true);
                 }
             }
+
+            if (items[minusindex].points == 0 && items.length > 35 && totalNonzero < (items.length / 2)) {
+                message.reply("Top half reached! All point totals will now be halved.");
+                items.forEach(m => m.points = Math.round(m.points / 2));
+            }
+
+
+            for (let p = 0; p < items.length; ++p) {
+                history[p].push(items[p].points);
+            }
             message.reply({ embeds: [pointsEmbed] });
 
             if (totalNonzero == 5 && items[minusindex].points == 0) {
@@ -264,7 +270,7 @@ bot.on("messageCreate", async message => {
 
                 //"You can send another message <t:" + (Math.ceil(player.lastMsg / 1000) + (items.filter(p => p.points > 0).length <= 5 ? 1800 : 3600)) + ":R>."
                 winVoteMsg = await message.channel.send("**<@&983347003176132608>\nFINAL TWO:**\n(react to vote)\n" +
-                    "Voting ends <t:" + ((new Date().getTime() + (1000 * 60 * 60 * 12))/60000) + ":R>\n" +
+                    "Voting ends <t:" + ((new Date().getTime() + (1000 * 60 * 60 * 12)) / 60000) + ":R>\n" +
                     "(1️⃣) " + nonZeroItems[0] + "\n(2️⃣) " + nonZeroItems[1]);
                 winVoteMsg.pin();
 
