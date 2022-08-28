@@ -220,7 +220,7 @@ bot.on("messageCreate", async message => {
 
             let nonZeroItems = items.filter((m, i) => m.points > 0 || (m.points == 0 && i == minusindex));
 
-            let columns = Math.max(nonZeroItems.length / 20);
+            let columns = Math.max(nonZeroItems.length / 25);
             let perColumn = Math.max(nonZeroItems.length / columns);
 
             const pointsEmbed = new MessageEmbed()
@@ -317,7 +317,7 @@ bot.on("messageCreate", async message => {
     if (cmd.startsWith("b.points")) {
         let nonZeroItems = items.filter(m => m.points > 0);
 
-        let columns = Math.max(nonZeroItems.length / 20);
+        let columns = Math.max(nonZeroItems.length / 25);
         let perColumn = Math.max(nonZeroItems.length / columns);
 
         const pointsEmbed = new MessageEmbed()
