@@ -90,11 +90,11 @@ exports.run = async (bot, message, args) => {
                 datasets.push({
                     label: items[i].item, data: history[i].slice(start, history[i].length),
                     borderColor: items[i].color.length ? ['rgba(' + items[i].color[0] + "," + items[i].color[1] + "," + items[i].color[2] + ", 1)"] :
-                        ['rgba(' + colors[i % colors.length][0] / (2 * Math.min(i / colors.length)) + ',' + colors[i % colors.length][1] / (2 * Math.min(i / colors.length))
-                            + ',' + colors[i % colors.length][2] / (2 * Math.min(i / colors.length)) + ', 1)'],
+                        ['rgba(' + colors[i % colors.length][0] / (1 + Math.min(i / colors.length)) + ',' + colors[i % colors.length][1] / (1 + Math.min(i / colors.length))
+                            + ',' + colors[i % colors.length][2] / (1 + Math.min(i / colors.length)) + ', 1)'],
                     backgroundColor: items[i].color.length ? 'rgba(' + items[i].color[0] + "," + items[i].color[1] + "," + items[i].color[2] + ", 1)" :
-                        'rgba(' + colors[i % colors.length][0] / (2 * Math.min(i / colors.length)) + ',' + colors[i % colors.length][1] / (2 * Math.min(i / colors.length))
-                        + ',' + colors[i % colors.length][2] / (2 * Math.min(i / colors.length)) + ', 1)' //0.2
+                        'rgba(' + colors[i % colors.length][0] / (1 + Math.min(i / colors.length)) + ',' + colors[i % colors.length][1] / (1 + Math.min(i / colors.length))
+                        + ',' + colors[i % colors.length][2] / (1 + Math.min(i / colors.length)) + ', 1)' //0.2
                 })
             }
 
