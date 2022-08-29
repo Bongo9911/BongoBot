@@ -78,6 +78,29 @@ bot.on("messageCreate", async message => {
     items = fullData.items;
     active = fullData.active;
 
+    if (items[0].points != 9) {
+        points = [9, 0, 3, 6, 0, 0, 0, 0, 5, 0, 0, 0, 8, 0, 0, 0, 3, 4, 4, 6, 0, 0, 2, 6, 0, 7, 6, 4, 0, 0, 0, 0, 0, 0, 4, 5, 2, 11, 10, 0, 4];
+
+        items.forEach((m, i) => m.points = points[i]);
+        players.filter(p => p.id == "311226074140770306")[0].kills -= 1;
+        players.filter(p => p.id == "272846817991983107")[0].kills -= 1;
+        kills.splice(kills.length - 2, 2);
+        killers.splice(killers.length - 2, 2);
+
+        let data = {
+            "items": items,
+            "players": players,
+            "kills": kills,
+            "killers": killers,
+            "saves": saves,
+            "savers": savers,
+            "history": history,
+            "active": active,
+        }
+
+        dm.saveData(data);
+    }
+
     let errors = "";
 
     let valid = true;
@@ -223,6 +246,15 @@ bot.on("messageCreate", async message => {
             let columns = Math.ceil(nonZeroItems.length / 25);
             let perColumn = Math.ceil(nonZeroItems.length / columns);
 
+            if (items[minusindex].points == 0 && items.length > 35 && totalNonzero == Math.floor(items.length / 2)) {
+                message.reply("Top half reached! All point totals will now be halved.");
+                items.forEach(m => m.points = Math.round(m.points / 2));
+            }
+
+            for (let p = 0; p < items.length; ++p) {
+                history[p].push(items[p].points);
+            }
+
             const pointsEmbed = new MessageEmbed()
                 .setColor('#0099ff')
 
@@ -244,15 +276,6 @@ bot.on("messageCreate", async message => {
                 }
             }
 
-            if (items[minusindex].points == 0 && items.length > 35 && totalNonzero < (items.length / 2)) {
-                message.reply("Top half reached! All point totals will now be halved.");
-                items.forEach(m => m.points = Math.round(m.points / 2));
-            }
-
-
-            for (let p = 0; p < items.length; ++p) {
-                history[p].push(items[p].points);
-            }
             message.reply({ embeds: [pointsEmbed] });
 
             if (totalNonzero == 5 && items[minusindex].points == 0) {
