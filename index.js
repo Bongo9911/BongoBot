@@ -224,7 +224,7 @@ bot.on("messageCreate", async message => {
             let perColumn = Math.ceil(nonZeroItems.length / columns);
 
             if (items[minusindex].points == 0 && items.length > 35 && totalNonzero == Math.floor(items.length / 2)) {
-                message.reply("Top half reached! All point totals will now be halved.");
+                message.channel.send("Top half reached! All point totals will now be halved.");
                 items.forEach(m => m.points = Math.round(m.points / 2));
             }
 
