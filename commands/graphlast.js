@@ -3,41 +3,65 @@ const ChartJSImage = require('chart.js-image');
 const { ChartJSNodeCanvas } = require("chartjs-node-canvas");
 const fs = require("fs");
 
+// colors = [
+//     [255, 0, 0],
+//     [0, 255, 0],
+//     [0, 0, 255],
+//     [255, 255, 0],
+//     [0, 255, 255],
+//     [255, 0, 255],
+//     [255, 128, 0],
+//     [128, 255, 0],
+//     [128, 0, 255],
+//     [255, 0, 128],
+//     [0, 255, 128],
+//     [0, 128, 255],
+//     [255, 128, 128],
+//     [128, 255, 128],
+//     [128, 128, 255],
+//     [0, 0, 0],
+//     [128, 128, 128],
+//     [128, 0, 0],
+//     [0, 128, 0],
+//     [0, 0, 128],
+//     [128, 128, 0],
+//     [0, 128, 128],
+//     [128, 0, 128],
+//     [128, 64, 0],
+//     [64, 128, 0],
+//     [64, 0, 128],
+//     [128, 0, 64],
+//     [0, 128, 64],
+//     [0, 64, 128],
+//     [128, 64, 64],
+//     [64, 128, 64],
+//     [64, 64, 128],
+//     [64, 64, 64],
+// ]
+
 colors = [
-    [255, 0, 0],
-    [0, 255, 0],
-    [0, 0, 255],
-    [255, 255, 0],
-    [0, 255, 255],
-    [255, 0, 255],
-    [255, 128, 0],
-    [128, 255, 0],
-    [128, 0, 255],
-    [255, 0, 128],
-    [0, 255, 128],
-    [0, 128, 255],
-    [255, 128, 128],
-    [128, 255, 128],
-    [128, 128, 255],
-    [0, 0, 0],
-    [128, 128, 128],
-    [128, 0, 0],
-    [0, 128, 0],
-    [0, 0, 128],
-    [128, 128, 0],
-    [0, 128, 128],
-    [128, 0, 128],
-    [128, 64, 0],
-    [64, 128, 0],
-    [64, 0, 128],
-    [128, 0, 64],
-    [0, 128, 64],
-    [0, 64, 128],
-    [128, 64, 64],
-    [64, 128, 64],
-    [64, 64, 128],
-    [64, 64, 64],
-]
+    [1, 196, 114],
+    [24, 120, 106],
+    [141, 210, 216],
+    [55, 82, 130],
+    [158, 126, 233],
+    [127, 32, 172],
+    [235, 103, 249],
+    [203, 23, 117],
+    [238, 200, 241],
+    [120, 40, 87],
+    [251, 133, 182],
+    [4, 148, 251],
+    [150, 198, 118],
+    [89, 131, 34],
+    [157, 234, 25],
+    [104, 61, 13],
+    [254, 143, 6],
+    [214, 7, 36],
+    [200, 147, 105],
+    [252, 209, 7],
+    [0, 0, 0]
+];
 
 exports.run = async (bot, message, args) => {
 
@@ -52,7 +76,7 @@ exports.run = async (bot, message, args) => {
             let history = fullData.history;
 
             let max = parseInt(args[0].trim());
-    
+
             let start = history[0].length - max;
             if (start < 0) start = 0;
 
@@ -62,9 +86,11 @@ exports.run = async (bot, message, args) => {
                 datasets.push({
                     label: items[i].item, data: history[i].slice(start, history[i].length),
                     borderColor: items[i].color.length ? ['rgba(' + items[i].color[0] + "," + items[i].color[1] + "," + items[i].color[2] + ", 1)"] :
-                        ['rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ',' + (1 - (Math.min(i / colors.length) * 0.5)) + ')'],
+                        ['rgba(' + colors[i % colors.length][0] / (2 * Math.min(i / colors.length)) + ',' + colors[i % colors.length][1] / (2 * Math.min(i / colors.length))
+                            + ',' + colors[i % colors.length][2] / (2 * Math.min(i / colors.length)) + ', 1)'],
                     backgroundColor: items[i].color.length ? 'rgba(' + items[i].color[0] + "," + items[i].color[1] + "," + items[i].color[2] + ", 1)" :
-                        'rgba(' + colors[i % colors.length][0] + ',' + colors[i % colors.length][1] + ',' + colors[i % colors.length][2] + ', 1)' //0.2
+                        'rgba(' + colors[i % colors.length][0] / (2 * Math.min(i / colors.length)) + ',' + colors[i % colors.length][1] / (2 * Math.min(i / colors.length))
+                        + ',' + colors[i % colors.length][2] / (2 * Math.min(i / colors.length)) + ', 1)' //0.2
                 })
             }
 
