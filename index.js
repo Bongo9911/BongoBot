@@ -133,7 +133,8 @@ bot.on("messageCreate", async message => {
                     lastminus: items[minusindex].label,
                     kills: 0,
                     saves: 0,
-                    badges: []
+                    badges: [],
+                    featuredBadge: "",
                 });
                 //points[minusindex] -= points.filter(p => p > 0).length <= 5 ? 2 : 1;
             }

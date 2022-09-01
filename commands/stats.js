@@ -66,7 +66,7 @@ exports.run = async (bot, message, args) => {
                 if (badgeText.length) {
                     statsEmbed.addField('Badges', badgeText, false);
                     console.log(player.featuredBadge);
-                    if (player.featuredBadge.length) {
+                    if (player.featuredBadge && player.featuredBadge.length) {
                         statsEmbed.setThumbnail(badgeLinks[player.featuredBadge]);
                     }
                 }
