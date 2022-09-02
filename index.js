@@ -271,26 +271,28 @@ bot.on("messageCreate", async message => {
                     }
 
                     //"You can send another message <t:" + (Math.ceil(player.lastMsg / 1000) + (items.filter(p => p.points > 0).length <= 5 ? 1800 : 3600)) + ":R>."
-                    winVoteMsg = await message.channel.send("**<@&983347003176132608>\nFINAL TWO:**\n(react to vote)\n" +
+                    message.channel.send("**<@&983347003176132608>\nFINAL TWO:**\n(react to vote)\n" +
                         "Voting ends <t:" + ((new Date().getTime() + (1000 * 60 * 60 * 12)) / 60000) + ":R>\n" +
-                        "(1️⃣) " + nonZeroItems[0] + "\n(2️⃣) " + nonZeroItems[1]);
-                    winVoteMsg.pin();
+                        "(1️⃣) " + nonZeroItems[0] + "\n(2️⃣) " + nonZeroItems[1]).then(msg => {
+                            winVoteMsg = msg;
+                            winVoteMsg.pin();
 
-                    winVoteMsg.react("1️⃣").then(() => {
-                        winVoteMsg.react("2️⃣").then(async () => {
-                            await new Promise(r => setTimeout(r, 1000 * 60 * 60 * 12)); //12 hours
-
-                            if (winVoteMsg.reactions.cache.get("1️⃣").count > winVoteMsg.reactions.cache.get("2️⃣").count) {
-                                message.channel.send("**" + nonZeroItems[0] + " has won the game with " + winVoteMsg.reactions.cache.get("1️⃣").count + " votes!**");
-                            }
-                            else if (winVoteMsg.reactions.cache.get("1️⃣").count < winVoteMsg.reactions.cache.get("2️⃣").count) {
-                                message.channel.send("**" + nonZeroItems[1] + " has won the game with " + winVoteMsg.reactions.cache.get("2️⃣").count + " votes!**");
-                            }
-                            else {
-                                message.channel.send("**The game has ended in a tie!**");
-                            }
+                            winVoteMsg.react("1️⃣").then(() => {
+                                winVoteMsg.react("2️⃣").then(async () => {
+                                    new Promise(r => setTimeout(r, 1000 * 60 * 60 * 12)).then(() => { //12 hours
+                                        if (winVoteMsg.reactions.cache.get("1️⃣").count > winVoteMsg.reactions.cache.get("2️⃣").count) {
+                                            message.channel.send("**" + nonZeroItems[0] + " has won the game with " + winVoteMsg.reactions.cache.get("1️⃣").count + " votes!**");
+                                        }
+                                        else if (winVoteMsg.reactions.cache.get("1️⃣").count < winVoteMsg.reactions.cache.get("2️⃣").count) {
+                                            message.channel.send("**" + nonZeroItems[1] + " has won the game with " + winVoteMsg.reactions.cache.get("2️⃣").count + " votes!**");
+                                        }
+                                        else {
+                                            message.channel.send("**The game has ended in a tie!**");
+                                        }
+                                    });
+                                });
+                            });
                         });
-                    });
                 }
 
                 let data = {

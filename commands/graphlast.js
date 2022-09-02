@@ -101,7 +101,7 @@ exports.run = async (bot, message, args) => {
             }
 
             const renderer = new ChartJSNodeCanvas({ width: 800, height: 600, backgroundColour: 'white' });
-            const image = await renderer.renderToBuffer({
+            renderer.renderToBuffer({
                 // Build your graph passing option you want
                 type: "line", // Show a line chart
                 backgroundColor: "rgba(236,197,1)",
@@ -116,17 +116,18 @@ exports.run = async (bot, message, args) => {
                         }
                     }
                 }
-            });
-            const attachment = new MessageAttachment(image, "graph.png");
+            }).then(image => {
+                const attachment = new MessageAttachment(image, "graph.png");
 
-            const graphEmbed = new MessageEmbed()
-                .setColor('#0099ff')
-                .setTitle("Point Graph")
-                .setImage('attachment://graph.png')
-                .setTimestamp()
-                .setFooter({ text: 'Command b.graphlast', iconURL: 'https://i.imgur.com/kk9lhk3.png' });
-
-            message.reply({ embeds: [graphEmbed], files: [attachment] });
+                const graphEmbed = new MessageEmbed()
+                    .setColor('#0099ff')
+                    .setTitle("Point Graph")
+                    .setImage('attachment://graph.png')
+                    .setTimestamp()
+                    .setFooter({ text: 'Command b.graphlast', iconURL: 'https://i.imgur.com/kk9lhk3.png' });
+    
+                message.reply({ embeds: [graphEmbed], files: [attachment] });
+            })
         }
         else {
             message.reply("Invalid syntax. Format should be: b.graphlast <num> (e.g. b.graphlast 50)");
