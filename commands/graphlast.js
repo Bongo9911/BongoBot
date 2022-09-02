@@ -84,6 +84,7 @@ exports.run = async (bot, message, args) => {
 
             let start = history[0].length - max;
             if (start < 0) start = 0;
+            if (max > 1000) max = 1000;
 
             let datasets = [];
 
