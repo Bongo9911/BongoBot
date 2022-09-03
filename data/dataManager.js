@@ -55,6 +55,16 @@ module.exports = class DataManager {
             return this.data[guildID][channelID];
         }
         else {
+            this.data[guildID] = {};
+            this.data[guildID][channelID] = {
+                items: [],
+                killers: [],
+                kills: [],
+                savers: [],
+                saves: [],
+                history: [],
+                active: false
+            }
             return null;
         }
     }
