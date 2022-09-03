@@ -51,8 +51,10 @@ module.exports = class DataManager {
     }
 
     getGameData(guildID, channelID) {
-        if (!(guildID in this.data) || !(channelID in this.data[guildID])) {
+        if (!(guildID in this.data)) {
             this.data[guildID] = {};
+        }
+        if(!(channelID in this.data[guildID])) {
             this.data[guildID][channelID] = {
                 items: [],
                 killers: [],
