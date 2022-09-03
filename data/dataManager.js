@@ -50,7 +50,6 @@ module.exports =  class DataManager {
         return channelID in this.data[guildID];
     }
 
-
     getGameData(guildID, channelID) {
         return this.data[guildID][channelID];
     }
@@ -70,10 +69,10 @@ module.exports =  class DataManager {
     //Attempts to add a theme for the specified guild
     //If it is sucessfully added, the function returns true, otherwise it returns false
     addTheme(guildID, name, items) {
-        if (this.themes[guildID].themes.filter(t => t.name.toLowerCase() == themename.toLowerCase()).length == 0) {
+        if (this.themes[guildID].themes.filter(t => t.name.toLowerCase() == name.toLowerCase()).length == 0) {
             this.themes[guildID].themes.push({
-                name: themename,
-                items: itemobjs,
+                name: name,
+                items: items,
             });
             this.updateThemes();
             return true;
