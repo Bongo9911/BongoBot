@@ -8,18 +8,20 @@ if (fs.existsSync("./data.json")) {
         }
         let fullData = JSON.parse(data);
 
-        let saveData = {};
-        saveData["279211267443523585"] = {};
-        saveData["279211267443523585"].players = fullData.players;
-        saveData["279211267443523585"]["980960076686848030"] = {
-            kills: fullData.kills,
-            killers: fullData.killers,
-            saves: fullData.saves,
-            savers: fullData.savers,
-            history: fullData.history,
-            items: fullData.items,
-            active: fullData.active
-        }
+        let saveData = {
+            "279211267443523585": {
+                players: fullData.players,
+                "980960076686848030": {
+                    kills: fullData.kills,
+                    killers: fullData.killers,
+                    saves: fullData.saves,
+                    savers: fullData.savers,
+                    history: fullData.history,
+                    items: fullData.items,
+                    active: fullData.active
+                }
+            }
+        };
 
         fs.writeFile("./data.json", JSON.stringify(saveData), 'utf8', (err) => {
             if (err) {
@@ -37,9 +39,11 @@ if (fs.existsSync("./themes.json")) {
         }
         let fullData = JSON.parse(data);
 
-        let saveData = {};
-        saveData["279211267443523585"] = {};
-        saveData["279211267443523585"].themes = fullData.themes;
+        let saveData = {
+            "279211267443523585": {
+                themes: fullData.themes
+            }
+        };
 
         fs.writeFile("./themes.json", JSON.stringify(saveData), 'utf8', (err) => {
             if (err) {
@@ -57,9 +61,11 @@ if (fs.existsSync("./settings.json")) {
         }
         let fullData = JSON.parse(data);
 
-        let saveData = {};
-        saveData["279211267443523585"]
-        saveData["279211267443523585"].admins = fullData.admins;
+        let saveData = {
+            "279211267443523585": {
+                admins: fullData.admins
+            }
+        };
 
         fs.writeFile("./settings.json", JSON.stringify(saveData), 'utf8', (err) => {
             if (err) {
