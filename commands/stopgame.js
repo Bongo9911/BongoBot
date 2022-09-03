@@ -1,50 +1,41 @@
 const { MessageEmbed } = require('discord.js');
-const fs = require("fs");
 const DataManager = require('../data/dataManager');
-
-let themes = [];
-let themename = "";
-let themeIndex = -1;
 
 let dm = DataManager.getInstance();
 
 exports.run = async (bot, message, args) => {
-    if (fs.existsSync("./settings.json")) {
-        fs.readFile("./settings.json", 'utf8', async (err, sdata) => {
-            let settingsData = JSON.parse(sdata);
-            if (settingsData.admins.indexOf(message.author.id) !== -1) {
-                let data = dm.getData();
-                if (data.active) {
-                    message.reply("Are you sure you want to end the current game?\nReply 'Yes' or 'No'.").then(() => {
-                        let filter = m => m.author.id === message.author.id
-                        message.channel.awaitMessages({
-                            filter,
-                            max: 1,
-                            time: 30000,
-                            errors: ['time']
-                        }).then(messages => {
-                            let message = messages.first();
-                            if (message.content.toUpperCase() == "YES") {
-                                data.active = false;
-                                dm.saveData(data);
-                                message.reply("Game stopped");
-                            }
-                            else {
-                                message.reply('Request Cancelled');
-                            }
-                        }).catch(collected => {
-                            message.reply('Request Timed Out');
-                        });
-                    })
-                }
-                else {
-                    message.reply("There is currently no active game.");
-                }
-            }
-            else {
-                message.reply("Only admins can perform this action.");
-            }
-        });
+    let settingsData = dm.getGuildSettings(message.guildId);
+    if (settingsData.admins.indexOf(message.author.id) !== -1) {
+        let data = dm.getGameData(message.guildId, message.channelId);
+        if (data.active) {
+            message.reply("Are you sure you want to end the current game?\nReply 'Yes' or 'No'.").then(() => {
+                let filter = m => m.author.id === message.author.id
+                message.channel.awaitMessages({
+                    filter,
+                    max: 1,
+                    time: 30000,
+                    errors: ['time']
+                }).then(messages => {
+                    let message = messages.first();
+                    if (message.content.toUpperCase() == "YES") {
+                        data.active = false;
+                        dm.saveData(data, message.guildId, message.channelId);
+                        message.reply("Game stopped");
+                    }
+                    else {
+                        message.reply('Request Cancelled');
+                    }
+                }).catch(collected => {
+                    message.reply('Request Timed Out');
+                });
+            })
+        }
+        else {
+            message.reply("There is currently no active game.");
+        }
+    }
+    else {
+        message.reply("Only admins can perform this action.");
     }
 }
 

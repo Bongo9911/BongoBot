@@ -1,35 +1,29 @@
 const { MessageEmbed } = require('discord.js');
-const fs = require("fs");
+const DataManager = require('../data/dataManager');
+
+let dm = DataManager.getInstance();
 
 let themename = "";
 
 exports.run = async (bot, message, args) => {
-    if (fs.existsSync("./themes.json")) {
-        fs.readFile("./themes.json", 'utf8', async (err, tdata) => {
-            if (fs.existsSync("./settings.json")) {
-                fs.readFile("./settings.json", 'utf8', async (err, sdata) => {
-                    themeData = JSON.parse(tdata);
-                    settingsData = JSON.parse(sdata);
-                    if (settingsData.admins.indexOf(message.author.id) !== -1) {
-                        themename = args.join(' ').trim();
-                        if (themename.length > 0) {
-                            if (themeData.themes.filter(t => t.name.toLowerCase() == themename.toLowerCase()).length != 0) {
-                                confirmRemoveTheme(message);
-                            }
-                            else {
-                                message.reply("Theme " + themename + " not found.");
-                            }
-                        }
-                        else {
-                            message.reply("No theme name provided, please use syntax b.removetheme <Theme Name>.");
-                        }
-                    }
-                    else {
-                        message.reply("Only admins can perform this action.");
-                    }
-                });
+    themeData = dm.getGuildThemes(message.guildId);
+    settingsData = dm.getGuildSettings(message.guildId);
+    if (settingsData.admins.indexOf(message.author.id) !== -1) {
+        themename = args.join(' ').trim();
+        if (themename.length > 0) {
+            if (themeData.themes.filter(t => t.name.toLowerCase() == themename.toLowerCase()).length != 0) {
+                confirmRemoveTheme(message);
             }
-        });
+            else {
+                message.reply("Theme " + themename + " not found.");
+            }
+        }
+        else {
+            message.reply("No theme name provided, please use syntax b.removetheme <Theme Name>.");
+        }
+    }
+    else {
+        message.reply("Only admins can perform this action.");
     }
 }
 
@@ -44,21 +38,12 @@ function confirmRemoveTheme(message) {
         }).then(messages => {
             let message = messages.first()
             if (message.content.toUpperCase() == "YES") {
-                fs.readFile("./themes.json", 'utf8', async (err, data) => {
-                    let themeData = JSON.parse(data);
-                    if (themeData.themes.filter(t => t.name.toLowerCase() == themename.toLowerCase()).length == 1) {
-                        themeData.themes.splice(themeData.themes.map(t => t.name.toLowerCase()).indexOf(themename.toLowerCase()), 1);
-                        fs.writeFile("./themes.json", JSON.stringify(themeData), 'utf8', (err) => {
-                            if (err) {
-                                console.error(err);
-                            }
-                            message.reply("Theme " + themename + " successfully removed.");
-                        });
-                    }
-                    else {
-                        message.reply("Theme " + themename + " not found. Maybe someone else already removed it?");
-                    }
-                });
+                if (dm.removeTheme(message.guildId, themename)) {
+                    message.reply("Theme " + themename + " successfully removed.");
+                }
+                else {
+                    message.reply("Theme " + themename + " not found. Maybe someone else already removed it?");
+                }
             }
             else {
                 message.reply("Cancelled remove request.");

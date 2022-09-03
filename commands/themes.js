@@ -1,32 +1,30 @@
 const { MessageEmbed } = require('discord.js');
-const fs = require("fs");
+const DataManager = require('../data/dataManager');
+
+let dm = DataManager.getInstance();
 
 exports.run = async (bot, message, args) => {
-    if (fs.existsSync("./themes.json")) {
-        fs.readFile("./themes.json", 'utf8', async (err, data) => {
-            themeData = JSON.parse(data);
-            themes = themeData.themes.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
+    themeData = dm.getGuildThemes(message.guildId);
+    themes = themeData.themes.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
 
-            if (themes.length) {
-                themeList = "";
+    if (themes.length) {
+        themeList = "";
 
-                themes.forEach((t, i) => {
-                    themeList += "**" + t.name + "** - " + t.items.length + " Items" + (i == themes.length - 1 ? " " : "\n");
-                })
+        themes.forEach((t, i) => {
+            themeList += "**" + t.name + "** - " + t.items.length + " Items" + (i == themes.length - 1 ? " " : "\n");
+        })
 
-                const themesEmbed = new MessageEmbed()
-                    .setColor('#0099ff')
-                    .setTitle("Themes")
-                    .setDescription(themeList)
-                    .setTimestamp()
-                    .setFooter({ text: 'Command b.themes', iconURL: 'https://i.imgur.com/kk9lhk3.png' });
+        const themesEmbed = new MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle("Themes")
+            .setDescription(themeList)
+            .setTimestamp()
+            .setFooter({ text: 'Command b.themes', iconURL: 'https://i.imgur.com/kk9lhk3.png' });
 
-                message.reply({ embeds: [themesEmbed] });
-            }
-            else {
-                message.reply("No themes found.");
-            }
-        });
+        message.reply({ embeds: [themesEmbed] });
+    }
+    else {
+        message.reply("No themes found.");
     }
 }
 
