@@ -69,22 +69,21 @@ bot.on("messageCreate", async message => {
         let cmd = messageArray[0];
         let args = messageArray.slice(1);
 
-        players = dm.getPlayerData(message.guildId);
-        let fullData = dm.getGameData(message.guildId, message.channelId);
-        kills = fullData.kills;
-        killers = fullData.killers;
-        saves = fullData.saves;
-        savers = fullData.savers;
-        history = fullData.history;
-        items = fullData.items;
-        active = fullData.active;
-
         let errors = "";
 
         let valid = true;
         if ((cmd.startsWith("-") || cmd.startsWith("+")) && items.filter(m => m.points > 0).length > 2 &&
-            message.content.indexOf("+") != -1 && message.content.indexOf("-") != -1 && active &&
-            (message.channel.id == 980960076686848030 || message.channel.id == 389594279758135317)) {
+            message.content.indexOf("+") != -1 && message.content.indexOf("-") != -1 && active && dm.checkValidChannel(message.guildId, message.channelId)) {
+
+            players = dm.getPlayerData(message.guildId);
+            let fullData = dm.getGameData(message.guildId, message.channelId);
+            kills = fullData.kills;
+            killers = fullData.killers;
+            saves = fullData.saves;
+            savers = fullData.savers;
+            history = fullData.history;
+            items = fullData.items;
+            active = fullData.active;
 
             let minusindex = -1;
             let plusindex = -1;
@@ -272,7 +271,7 @@ bot.on("messageCreate", async message => {
 
                     //"You can send another message <t:" + (Math.ceil(player.lastMsg / 1000) + (items.filter(p => p.points > 0).length <= 5 ? 1800 : 3600)) + ":R>."
                     message.channel.send("**<@&983347003176132608>\nFINAL TWO:**\n(react to vote)\n" +
-                        "Voting ends <t:" + Math.ceil((new Date().getTime()/1000) + (60 * 60 * 12)) + ":R>\n" +
+                        "Voting ends <t:" + Math.ceil((new Date().getTime() / 1000) + (60 * 60 * 12)) + ":R>\n" +
                         "(1️⃣) " + nonZeroItems[0] + "\n(2️⃣) " + nonZeroItems[1]).then(msg => {
                             winVoteMsg = msg;
                             winVoteMsg.pin();

@@ -46,6 +46,10 @@ module.exports =  class DataManager {
         }
     }
 
+    checkValidChannel(guildID, channelID) {
+        return channelID in this.data[guildID];
+    }
+
 
     getGameData(guildID, channelID) {
         return this.data[guildID][channelID];
