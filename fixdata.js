@@ -9,6 +9,17 @@ if (fs.existsSync("./data.json")) {
         let fullData = JSON.parse(data);
         let players = fullData["279211267443523585"].players;
 
+        players.push({
+            id: "206879808523599876",
+            lastMsg: new Date().getTime(),
+            lastadd: "0",
+            lastminus: "0",
+            kills: 0,
+            saves: 0,
+            badges: [],
+            featuredBadge: "",
+        })
+
         players.filter(p => p.id == "106155803328692224")[0].kills += 1;
         players.filter(p => p.id == "213596035392471040")[0].kills += 1;
         players.filter(p => p.id == "483744393782624267")[0].kills += 1;
