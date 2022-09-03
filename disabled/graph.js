@@ -74,9 +74,9 @@ let colors = [
 exports.run = async (bot, message, args) => {
     message.channel.sendTyping();
 
-    let fullData = dm.getGameData(message.guildId, message.channelId);
-    let items = fullData.items;
-    let history = fullData.history;
+    let gameData = dm.getGameData(message.guildId, message.channelId);
+    let items = gameData.items;
+    let history = gameData.history;
 
     let datasets = [];
 

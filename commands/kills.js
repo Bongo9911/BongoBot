@@ -9,11 +9,11 @@ let kills = [];
 let killers = [];
 
 exports.run = async (bot, message, args) => {
-    let fullData = dm.getGameData(message.guildId, message.channelId);
-    items = fullData.items;
+    let gameData = dm.getGameData(message.guildId, message.channelId);
+    items = gameData.items;
     players = dm.getPlayerData(message.guildId);
-    kills = fullData.kills;
-    killers = fullData.killers;
+    kills = gameData.kills;
+    killers = gameData.killers;
 
     console.log(killers);
 

@@ -9,11 +9,11 @@ let saves = [];
 let savers = [];
 
 exports.run = async (bot, message, args) => {
-    let fullData = dm.getGameData(message.guildId, message.channelId);
-    items = fullData.items;
+    let gameData = dm.getGameData(message.guildId, message.channelId);
+    items = gameData.items;
     players = dm.getPlayerData(message.guildId);
-    saves = fullData.saves;
-    savers = fullData.savers;
+    saves = gameData.saves;
+    savers = gameData.savers;
 
     console.log(savers);
 

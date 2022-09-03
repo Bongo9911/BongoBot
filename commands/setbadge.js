@@ -14,19 +14,15 @@ let badges = {
 }
 
 exports.run = async (bot, message, args) => {
-    let player = dm.getPlayerData(message.guildId).filter(p => p.id == message.author.id);
+    let players = dm.getPlayerData(message.guildId)
+    let player = players.filter(p => p.id == message.author.id);
 
     if (player) {
         let badge = message.content.slice(10).trim();
         if (badge.toLowerCase() in badges) {
-            fullData.players.forEach(p => {
-                if (p.id == message.author.id) {
-                    p.featuredBadge = badges[badge.toLowerCase()];
-                }
-            })
-            console.log(fullData.players.filter(p => p.id == message.author.id));
+            player.featuredBadge = badges[badge.toLowerCase()];
 
-            dm.saveData(fullData, message.guildId, message.channelId);
+            dm.savePlayerData(players, message.guildId, message.channelId);
             message.reply("Featured badge successfully set");
         }
         else {

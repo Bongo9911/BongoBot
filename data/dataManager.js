@@ -95,20 +95,8 @@ module.exports =  class DataManager {
     }
 
     saveData(data, guildID, channelID) {
-        this.data[guildID].players = data.players,
-        this.data[guildID][channelID].kills = data.kills;
-        this.data[guildID][channelID].killers = data.killers;
-        this.data[guildID][channelID].saves = data.saves;
-        this.data[guildID][channelID].savers = data.savers;
-        this.data[guildID][channelID].history = data.history ?? [];
-        this.data[guildID][channelID].items = data.items;
-        this.data[guildID][channelID].active = data.active ?? false;
-        
-        fs.writeFile("./data.json", JSON.stringify(data), 'utf8', (err) => {
-            if (err) {
-                console.error(err);
-            }
-        });
+        this.savePlayerData(data.players, guildID),
+        this.saveGameData(data, guildID, channelID);
     }
 
     saveGameData(data, guildID, channelID) {
@@ -120,7 +108,17 @@ module.exports =  class DataManager {
         this.data[guildID][channelID].items = data.items;
         this.data[guildID][channelID].active = data.active ?? false;
         
-        fs.writeFile("./data.json", JSON.stringify(data), 'utf8', (err) => {
+        fs.writeFile("./data.json", JSON.stringify(this.data), 'utf8', (err) => {
+            if (err) {
+                console.error(err);
+            }
+        });
+    }
+
+    savePlayerData(players, guildID) {
+        this.data[guildID].players = players;
+        
+        fs.writeFile("./data.json", JSON.stringify(this.data), 'utf8', (err) => {
             if (err) {
                 console.error(err);
             }
