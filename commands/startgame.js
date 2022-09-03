@@ -71,7 +71,8 @@ function startTheme(message) {
                 else {
                     message.reply("Points must be greater than 0.");
                 }
-            }).catch(collected => {
+            }).catch(error => {
+                console.error(error);
                 message.reply('Request Timed Out');
             });
         })

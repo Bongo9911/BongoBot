@@ -103,8 +103,8 @@ module.exports = class DataManager {
     }
 
     saveData(data, guildID, channelID) {
-        this.savePlayerData(data.players, guildID),
-            this.saveGameData(data, guildID, channelID);
+        this.savePlayerData(data.players, guildID);
+        this.saveGameData(data, guildID, channelID);
     }
 
     saveGameData(data, guildID, channelID) {
