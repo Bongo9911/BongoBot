@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 if (fs.existsSync("./data.json")) {
     fs.readFile("./data.json", 'utf8', (err, data) => {
         if (err) {
