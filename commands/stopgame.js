@@ -13,7 +13,7 @@ exports.run = async (bot, message, args) => {
         fs.readFile("./settings.json", 'utf8', async (err, sdata) => {
             let settingsData = JSON.parse(sdata);
             if (settingsData.admins.indexOf(message.author.id) !== -1) {
-                let data = dm.getData();
+                let data = dm.getGameData(message.guildId, message.channelId);
                 if (data.active) {
                     message.reply("Are you sure you want to end the current game?\nReply 'Yes' or 'No'.").then(() => {
                         let filter = m => m.author.id === message.author.id
@@ -26,7 +26,7 @@ exports.run = async (bot, message, args) => {
                             let message = messages.first();
                             if (message.content.toUpperCase() == "YES") {
                                 data.active = false;
-                                dm.saveData(data);
+                                dm.saveData(data, message.guildId, message.channelId);
                                 message.reply("Game stopped");
                             }
                             else {

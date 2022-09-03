@@ -35,7 +35,7 @@ exports.run = async (bot, message, args) => {
                     })
                     console.log(fullData.players.filter(p => p.id == message.author.id));
 
-                    dm.saveData(fullData);
+                    dm.saveData(fullData, message.guildId, message.channelId);
                     message.reply("Featured badge successfully set");
                 }
                 else {

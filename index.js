@@ -69,8 +69,8 @@ bot.on("messageCreate", async message => {
         let cmd = messageArray[0];
         let args = messageArray.slice(1);
 
-        let fullData = dm.getData();
-        players = fullData.players;
+        players = dm.getPlayerData(message.guildId);
+        let fullData = dm.getGameData(message.guildId, message.channelId);
         kills = fullData.kills;
         killers = fullData.killers;
         saves = fullData.saves;
@@ -272,7 +272,7 @@ bot.on("messageCreate", async message => {
 
                     //"You can send another message <t:" + (Math.ceil(player.lastMsg / 1000) + (items.filter(p => p.points > 0).length <= 5 ? 1800 : 3600)) + ":R>."
                     message.channel.send("**<@&983347003176132608>\nFINAL TWO:**\n(react to vote)\n" +
-                        "Voting ends <t:" + ((new Date().getTime() + (1000 * 60 * 60 * 12)) / 60000) + ":R>\n" +
+                        "Voting ends <t:" + Math.ceil((new Date().getTime() + (1000 * 60 * 60 * 12)) / 60000) + ":R>\n" +
                         "(1️⃣) " + nonZeroItems[0] + "\n(2️⃣) " + nonZeroItems[1]).then(msg => {
                             winVoteMsg = msg;
                             winVoteMsg.pin();
@@ -306,7 +306,7 @@ bot.on("messageCreate", async message => {
                     "active": active,
                 }
 
-                dm.saveData(data);
+                dm.saveData(data, message.guildId, message.channelId);
             }
             else {
                 message.reply(errors);

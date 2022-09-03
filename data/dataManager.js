@@ -3,16 +3,7 @@ const fs = require("fs");
 module.exports =  class DataManager {
     static myInstance = null;
 
-    static fullData = {};
-
-    static players = [];
-    static kills = [];
-    static killers = [];
-    static saves = [];
-    static savers = [];
-    static history = [];
-    static items = [];
-    static active = false;
+    static data = {};
 
     static getInstance() {
         if (DataManager.myInstance == null) {
@@ -30,33 +21,29 @@ module.exports =  class DataManager {
                     console.error(err);
                     return;
                 }
-                this.fullData = JSON.parse(data);
-                this.players = this.fullData.players;
-                this.kills = this.fullData.kills;
-                this.killers = this.fullData.killers;
-                this.saves = this.fullData.saves;
-                this.savers = this.fullData.savers;
-                this.history = this.fullData.history ?? [];
-                this.items = this.fullData.items;
-                this.active = this.fullData.active ?? false;
+                this.data = JSON.parse(data);
             });
         }
     }
 
-    getData() {
-        return this.fullData;
+
+    getGameData(guildID, channelID) {
+        return this.data[guildID][channelID];
     }
 
-    saveData(data) {
-        this.fullData = data;
-        this.players = data.players;
-        this.kills = data.kills;
-        this.killers = data.killers;
-        this.saves = data.saves;
-        this.savers = data.savers;
-        this.history = data.history ?? [];
-        this.items = data.items;
-        this.active = data.active ?? false;
+    getPlayerData(guildID) {
+        return this.data[guildID].players;
+    }
+
+    saveData(data, guildID, channelID) {
+        this.data[guildID].players = data.players,
+        this.data[guildID][channelID].kills = data.kills;
+        this.data[guildID][channelID].killers = data.killers;
+        this.data[guildID][channelID].saves = data.saves;
+        this.data[guildID][channelID].savers = data.savers;
+        this.data[guildID][channelID].history = data.history ?? [];
+        this.data[guildID][channelID].items = data.items;
+        this.data[guildID][channelID].active = data.active ?? false;
         
         fs.writeFile("./data.json", JSON.stringify(data), 'utf8', (err) => {
             if (err) {

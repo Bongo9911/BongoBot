@@ -74,7 +74,7 @@ function startTheme(message) {
                             fullData.kills = [];
                             fullData.killers = [];
 
-                            dm.saveData(fullData);
+                            dm.saveData(fullData, message.guildId, message.channelId);
                             message.reply("Starting theme: " + themes[themeIndex].name);
                         }
                         else {
