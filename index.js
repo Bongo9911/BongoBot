@@ -317,34 +317,9 @@ bot.on("messageCreate", async message => {
 
         console.log(args);
 
-        if (cmd.startsWith("b.points")) {
-            let nonZeroItems = items.filter(m => m.points > 0);
-
-            let columns = Math.ceil(nonZeroItems.length / 25);
-            let perColumn = Math.ceil(nonZeroItems.length / columns);
-
-            const pointsEmbed = new MessageEmbed()
-                .setColor('#0099ff');
-
-            for (let i = 0; i < columns; ++i) {
-                let pointCol = "";
-                for (let j = i * perColumn; j < (i + 1) * perColumn && j < nonZeroItems.length; ++j) {
-                    pointCol += "(" + nonZeroItems[j].label + ") " + (nonZeroItems[j].emoji ? nonZeroItems[j].emoji + " " : "") + nonZeroItems[j].item + " - **" + nonZeroItems[j].points + "**\n";
-                }
-                if (i == 0) {
-                    pointsEmbed.addField("Points", pointCol, true);
-                }
-                else {
-                    pointsEmbed.addField("\u200b", pointCol, true);
-                }
-            }
-            message.reply({ embeds: [pointsEmbed] });
-        }
-        else {
-            //Get the command from the commands collection and then if the command is found run the command file
-            let commandfile = bot.commands.get(cmd.slice(prefix.length));
-            if (commandfile) commandfile.run(bot, message, args);
-        }
+        //Get the command from the commands collection and then if the command is found run the command file
+        let commandfile = bot.commands.get(cmd.slice(prefix.length));
+        if (commandfile) commandfile.run(bot, message, args);
     }
     catch (e) {
         console.error(e.message);
