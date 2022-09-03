@@ -7,7 +7,7 @@ exports.run = async (bot, message, args) => {
     let settingsData = dm.getGuildSettings(message.guildId);
     if (settingsData.admins.indexOf(message.author.id) !== -1) {
         let data = dm.getGameData(message.guildId, message.channelId);
-        if (data.active) {
+        if (data && data.active) {
             message.reply("Are you sure you want to end the current game?\nReply 'Yes' or 'No'.").then(() => {
                 let filter = m => m.author.id === message.author.id
                 message.channel.awaitMessages({

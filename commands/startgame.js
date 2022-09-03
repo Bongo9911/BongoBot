@@ -28,7 +28,10 @@ exports.run = async (bot, message, args) => {
 
 function startTheme(message) {
     let gameData = dm.getGameData(message.guildId, message.channelId);
-    if (!gameData.active) {
+    if ((gameData && !gameData.active) || !gameData) {
+        if(!gameData) {
+            gameData = {};
+        }
         let filter = m => m.author.id === message.author.id
         message.reply("How many points should each item start with?").then(() => {
             message.channel.awaitMessages({

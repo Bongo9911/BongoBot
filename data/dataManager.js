@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-module.exports =  class DataManager {
+module.exports = class DataManager {
     static myInstance = null;
 
     static data = {};
@@ -51,7 +51,12 @@ module.exports =  class DataManager {
     }
 
     getGameData(guildID, channelID) {
-        return this.data[guildID][channelID];
+        if (guildID in this.data && channelID in this.data[guildID]) {
+            return this.data[guildID][channelID];
+        }
+        else {
+            return null;
+        }
     }
 
     getPlayerData(guildID) {
@@ -99,7 +104,7 @@ module.exports =  class DataManager {
 
     saveData(data, guildID, channelID) {
         this.savePlayerData(data.players, guildID),
-        this.saveGameData(data, guildID, channelID);
+            this.saveGameData(data, guildID, channelID);
     }
 
     saveGameData(data, guildID, channelID) {
@@ -110,7 +115,7 @@ module.exports =  class DataManager {
         this.data[guildID][channelID].history = data.history ?? [];
         this.data[guildID][channelID].items = data.items;
         this.data[guildID][channelID].active = data.active ?? false;
-        
+
         fs.writeFile("./data.json", JSON.stringify(this.data), 'utf8', (err) => {
             if (err) {
                 console.error(err);
@@ -120,7 +125,7 @@ module.exports =  class DataManager {
 
     savePlayerData(players, guildID) {
         this.data[guildID].players = players;
-        
+
         fs.writeFile("./data.json", JSON.stringify(this.data), 'utf8', (err) => {
             if (err) {
                 console.error(err);
