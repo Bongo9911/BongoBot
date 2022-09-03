@@ -7,6 +7,7 @@ if (fs.existsSync("./data.json")) {
             return;
         }
         let fullData = JSON.parse(data);
+        console.log(fullData)
 
         let saveData = {
             "279211267443523585": {
