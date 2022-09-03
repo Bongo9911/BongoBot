@@ -51,7 +51,8 @@ function getItems(message) {
                 message.reply("Invalid number of items provided. Must have at least 3.");
                 getItems(message);
             }
-        }).catch(collected => {
+        }).catch(error => {
+            console.error(error);
             message.reply('Request Timed Out');
         });
     })
@@ -83,7 +84,8 @@ function getIDs(message) {
                         getIDs(message);
                     }
                 }
-            }).catch(collected => {
+            }).catch(error => {
+                console.error(error);
                 message.reply('Request Timed Out');
             });
         })
@@ -115,7 +117,8 @@ function getEmojis(message) {
                         getEmojis(message);
                     }
                 }
-            }).catch(collected => {
+            }).catch(error => {
+                console.error(error);
                 message.reply('Request Timed Out');
             });
         })
@@ -164,7 +167,8 @@ function getColors(message) {
                         getColors(message);
                     }
                 }
-            }).catch(collected => {
+            }).catch(error => {
+                console.error(error);
                 message.reply('Request Timed Out');
             });
         })
