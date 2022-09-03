@@ -19,7 +19,7 @@ exports.run = async (bot, message, args) => {
                     let message = messages.first();
                     if (message.content.toUpperCase() == "YES") {
                         data.active = false;
-                        dm.saveData(data, message.guildId, message.channelId);
+                        dm.saveGameData(data, message.guildId, message.channelId);
                         message.reply("Game stopped");
                     }
                     else {
