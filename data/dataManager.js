@@ -56,11 +56,11 @@ module.exports =  class DataManager {
     }
 
     getGuildThemes(guildID) {
-        return themes[guildID];
+        return this.themes[guildID];
     }
 
     getGuildSettings(guildID) {
-        return settings[guildID];
+        return this.settings[guildID];
     }
 
     //Attempts to add a theme for the specified guild
