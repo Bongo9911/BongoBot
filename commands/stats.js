@@ -1,5 +1,7 @@
 const { MessageEmbed } = require('discord.js');
-const fs = require("fs");
+const DataManager = require('../data/dataManager');
+
+let dm = DataManager.getInstance();
 
 let badges = {
     "Killer": ":knife:",
@@ -29,60 +31,52 @@ exports.run = async (bot, message, args) => {
 
     console.log(userId);
 
-    let players = [];
+    let players = dm.getPlayerData(message.guildId);
 
-    fs.readFile('./data.json', 'utf8', function (err, data) {
-        if (err) {
-            console.log(err)
-        } else {
-            players = JSON.parse(data).players;
+    let player = players.filter(p => p.id == userId)[0];
+    if (player) {
+        let user = bot.users.cache.get(userId);
 
-            let player = players.filter(p => p.id == userId)[0];
-            if (player) {
-                let user = bot.users.cache.get(userId);
+        let badgeText = "";
 
-                let badgeText = "";
+        console.log(player);
 
-                console.log(player);
+        player.badges.forEach(b => {
+            badgeText += badges[b];
+        })
 
-                player.badges.forEach(b => {
-                    badgeText += badges[b];
-                })
+        const statsEmbed = new MessageEmbed()
+            .setColor('#0099ff')
+            //.setTitle('<@' + user + '>')
+            //.setURL('https://discord.js.org/')
+            .setAuthor({ name: user.tag, iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`, /*url: 'https://discord.js.org'*/ })
+            //.setDescription('Some description here')
+            //.setThumbnail('https://i.imgur.com/AfFp7pu.png')
+            .addFields(
+                //{ name: 'Regular field title', value: 'Some value here' },
+                //{ name: '\u200B', value: '\u200B' },
+                { name: 'Kills', value: player.kills.toString(), inline: true },
+                { name: 'Saves', value: player.saves.toString(), inline: true },
+            )
 
-                const statsEmbed = new MessageEmbed()
-                    .setColor('#0099ff')
-                    //.setTitle('<@' + user + '>')
-                    //.setURL('https://discord.js.org/')
-                    .setAuthor({ name: user.tag, iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`, /*url: 'https://discord.js.org'*/ })
-                    //.setDescription('Some description here')
-                    //.setThumbnail('https://i.imgur.com/AfFp7pu.png')
-                    .addFields(
-                        //{ name: 'Regular field title', value: 'Some value here' },
-                        //{ name: '\u200B', value: '\u200B' },
-                        { name: 'Kills', value: player.kills.toString(), inline: true },
-                        { name: 'Saves', value: player.saves.toString(), inline: true },
-                    )
-
-                if (badgeText.length) {
-                    statsEmbed.addField('Badges', badgeText, false);
-                    console.log(player.featuredBadge);
-                    if (player.featuredBadge && player.featuredBadge.length) {
-                        statsEmbed.setThumbnail(badgeLinks[player.featuredBadge]);
-                    }
-                }
-
-                //.setImage('https://i.imgur.com/AfFp7pu.png')
-
-                statsEmbed.setTimestamp()
-                    .setFooter({ text: 'Command b.stats', iconURL: 'https://i.imgur.com/kk9lhk3.png' });
-
-                message.reply({ embeds: [statsEmbed] });
-            }
-            else {
-
+        if (badgeText.length) {
+            statsEmbed.addField('Badges', badgeText, false);
+            console.log(player.featuredBadge);
+            if (player.featuredBadge && player.featuredBadge.length) {
+                statsEmbed.setThumbnail(badgeLinks[player.featuredBadge]);
             }
         }
-    });
+
+        //.setImage('https://i.imgur.com/AfFp7pu.png')
+
+        statsEmbed.setTimestamp()
+            .setFooter({ text: 'Command b.stats', iconURL: 'https://i.imgur.com/kk9lhk3.png' });
+
+        message.reply({ embeds: [statsEmbed] });
+    }
+    else {
+
+    }
 }
 
 exports.help = {

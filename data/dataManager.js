@@ -4,6 +4,8 @@ module.exports =  class DataManager {
     static myInstance = null;
 
     static data = {};
+    static settings = {};
+    static themes = {};
 
     static getInstance() {
         if (DataManager.myInstance == null) {
@@ -24,6 +26,24 @@ module.exports =  class DataManager {
                 this.data = JSON.parse(data);
             });
         }
+        if (fs.existsSync("./settings.json")) {
+            fs.readFile("./settings.json", 'utf8', (err, data) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                this.settings = JSON.parse(data);
+            });
+        }
+        if (fs.existsSync("./themes.json")) {
+            fs.readFile("./themes.json", 'utf8', (err, data) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                this.themes = JSON.parse(data);
+            });
+        }
     }
 
 
@@ -35,8 +55,63 @@ module.exports =  class DataManager {
         return this.data[guildID].players;
     }
 
+    getGuildThemes(guildID) {
+        return themes[guildID];
+    }
+
+    getGuildSettings(guildID) {
+        return settings[guildID];
+    }
+
+    //Attempts to add a theme for the specified guild
+    //If it is sucessfully added, the function returns true, otherwise it returns false
+    addTheme(guildID, name, items) {
+        if (this.themes[guildID].themes.filter(t => t.name.toLowerCase() == themename.toLowerCase()).length == 0) {
+            this.themes[guildID].themes.push({
+                name: themename,
+                items: itemobjs,
+            });
+            this.updateThemes();
+            return true;
+        }
+        return false;
+    }
+
+    removeTheme(guildID, name) {
+        if (this.themes[guildID].themes.filter(t => t.name.toLowerCase() == name.toLowerCase()).length == 1) {
+            this.themes[guildID].themes.splice(this.themes[guildID].themes.map(t => t.name.toLowerCase()).indexOf(name.toLowerCase()), 1);
+            this.updateThemes();
+            return true
+        }
+        return false;
+    }
+
+    updateThemes() {
+        fs.writeFile("./themes.json", JSON.stringify(this.themes), 'utf8', (err) => {
+            if (err) {
+                console.error(err);
+            }
+        });
+    }
+
     saveData(data, guildID, channelID) {
         this.data[guildID].players = data.players,
+        this.data[guildID][channelID].kills = data.kills;
+        this.data[guildID][channelID].killers = data.killers;
+        this.data[guildID][channelID].saves = data.saves;
+        this.data[guildID][channelID].savers = data.savers;
+        this.data[guildID][channelID].history = data.history ?? [];
+        this.data[guildID][channelID].items = data.items;
+        this.data[guildID][channelID].active = data.active ?? false;
+        
+        fs.writeFile("./data.json", JSON.stringify(data), 'utf8', (err) => {
+            if (err) {
+                console.error(err);
+            }
+        });
+    }
+
+    saveGameData(data, guildID, channelID) {
         this.data[guildID][channelID].kills = data.kills;
         this.data[guildID][channelID].killers = data.killers;
         this.data[guildID][channelID].saves = data.saves;

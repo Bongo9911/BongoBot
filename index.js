@@ -272,7 +272,7 @@ bot.on("messageCreate", async message => {
 
                     //"You can send another message <t:" + (Math.ceil(player.lastMsg / 1000) + (items.filter(p => p.points > 0).length <= 5 ? 1800 : 3600)) + ":R>."
                     message.channel.send("**<@&983347003176132608>\nFINAL TWO:**\n(react to vote)\n" +
-                        "Voting ends <t:" + Math.ceil((new Date().getTime() + (1000 * 60 * 60 * 12)) / 60000) + ":R>\n" +
+                        "Voting ends <t:" + Math.ceil((new Date().getTime() + (1000 * 60 * 60 * 12)) / 1000) + ":R>\n" +
                         "(1️⃣) " + nonZeroItems[0] + "\n(2️⃣) " + nonZeroItems[1]).then(msg => {
                             winVoteMsg = msg;
                             winVoteMsg.pin();
