@@ -1,6 +1,7 @@
 node_modules/*
 points.txt
 data.json
+data-backup.json
 .env
 themes.json
 settings.json
