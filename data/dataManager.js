@@ -63,6 +63,7 @@ module.exports = class DataManager {
                 items: [],
                 killers: [],
                 kills: [],
+                players: [],
                 savers: [],
                 saves: [],
                 history: [],
@@ -128,6 +129,7 @@ module.exports = class DataManager {
         this.data[guildID][channelID].history = data.history ?? [];
         this.data[guildID][channelID].items = data.items;
         this.data[guildID][channelID].active = data.active ?? false;
+        this.data[guildID][channelID].players = data.gamePlayers ?? [];
 
         fs.writeFile("./data.json", JSON.stringify(this.data), 'utf8', (err) => {
             if (err) {

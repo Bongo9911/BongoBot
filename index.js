@@ -75,8 +75,6 @@ bot.on("messageCreate", async message => {
         if ((cmd.startsWith("-") || cmd.startsWith("+")) &&
             message.content.indexOf("+") != -1 && message.content.indexOf("-") != -1 && dm.checkValidChannel(message.guildId, message.channelId)) {
 
-            console.log("Giving and Taking")
-
             let fullData = dm.getGameData(message.guildId, message.channelId);
             items = fullData.items;
             active = fullData.active;
@@ -85,6 +83,7 @@ bot.on("messageCreate", async message => {
 
             if (items.filter(m => m.points > 0).length > 2 && active) {
                 players = dm.getPlayerData(message.guildId);
+                gamePlayers = fullData.players ?? [];
                 kills = fullData.kills;
                 killers = fullData.killers;
                 saves = fullData.saves;
@@ -127,14 +126,13 @@ bot.on("messageCreate", async message => {
 
                 if (valid) {
                     //console.log(players);
-                    console.log("Valid Command")
-                    let player = players.filter(p => p.id === message.author.id)[0];
+                    let player = players.find(p => p.id === message.author.id);
                     console.log(player);
+                    let gamePlayer = gamePlayers.find(p => p.id === message.author.id)
 
                     if (!player) {
                         players.push({
                             id: message.author.id,
-                            lastMsg: new Date().getTime(),
                             lastadd: items[plusindex].label,
                             lastminus: items[minusindex].label,
                             kills: 0,
@@ -142,20 +140,30 @@ bot.on("messageCreate", async message => {
                             badges: [],
                             featuredBadge: "",
                         });
+                        gamePlayers.push({
+                            id: message.author.id,
+                            lastMsg: new Date().getTime()
+                        })
                         //points[minusindex] -= points.filter(p => p > 0).length <= 5 ? 2 : 1;
                     }
                     else {
-                        let minutesLeft = (player.lastMsg - (new Date().getTime() - (items.filter(m => m.points > 0).length <= 5 ? 1800000 : 3600000))) / (1000 * 60);
+                        if(!gamePlayer) {
+                            gamePlayers.push({
+                                id: message.author.id,
+                                lastMsg: player.lastMsg ?? new Date().getTime()
+                            })
+                        }
+                        let minutesLeft = (gamePlayer.lastMsg - (new Date().getTime() - (items.filter(m => m.points > 0).length <= 5 ? 1800000 : 3600000))) / (1000 * 60);
                         if (minutesLeft > 0) { //1000 * 60 * 60 * 1 (1 hour)
                             valid = false;
-                            errors += "You can send another message <t:" + (Math.ceil(player.lastMsg / 1000) + (items.filter(p => p.points > 0).length <= 5 ? 1800 : 3600)) + ":R>.";
+                            errors += "You can send another message <t:" + (Math.ceil(gamePlayer.lastMsg / 1000) + (items.filter(p => p.points > 0).length <= 5 ? 1800 : 3600)) + ":R>.";
                         }
                         // else if (plusindex == labels.indexOf(player.lastadd) && minusindex == labels.indexOf(player.lastminus) && points.filter(p => p > 0).length > 5) {
                         //     valid = false;
                         //     errors += "You cannot repeat the same action twice in a row.";
                         // }
                         else {
-                            player.lastMsg = new Date().getTime();
+                            gamePlayer.lastMsg = new Date().getTime();
                             player.lastadd = items[plusindex].label;
                             player.lastminus = items[minusindex].label;
                             //points[minusindex] -= points.filter(p => p > 0).length <= 5 ? 2 : 1;
@@ -164,8 +172,7 @@ bot.on("messageCreate", async message => {
                 }
 
                 if (valid) {
-                    console.log("Valid Command 2")
-                    let player = players.filter(p => p.id === message.author.id)[0];
+                    let player = players.find(p => p.id === message.author.id);
 
                     if (items[minusindex].points == 1) {
                         player.kills += 1;
@@ -219,8 +226,7 @@ bot.on("messageCreate", async message => {
                 let totalNonzero = items.filter(m => m.points > 0).length;
 
                 if (valid) {
-                    console.log("Valid Command 3")
-                    let player = players.filter(p => p.id === message.author.id)[0];
+                    let player = players.find(p => p.id === message.author.id);
 
                     if (totalNonzero == 2 && player.badges.indexOf("Finishing Blow") == -1) {
                         player.badges.push("Finishing Blow");
@@ -262,8 +268,6 @@ bot.on("messageCreate", async message => {
                         }
                     }
 
-                    console.log("Replying to Message")
-
                     message.reply({ embeds: [pointsEmbed] });
 
                     if (totalNonzero == 5 && items[minusindex].points == 0) {
@@ -279,7 +283,7 @@ bot.on("messageCreate", async message => {
                             }
                         }
 
-                        //"You can send another message <t:" + (Math.ceil(player.lastMsg / 1000) + (items.filter(p => p.points > 0).length <= 5 ? 1800 : 3600)) + ":R>."
+                        //"You can send another message <t:" + (Math.ceil(gamePlayer.lastMsg / 1000) + (items.filter(p => p.points > 0).length <= 5 ? 1800 : 3600)) + ":R>."
                         message.channel.send("**<@&983347003176132608>\nFINAL TWO:**\n(react to vote)\n" +
                             "Voting ends <t:" + Math.ceil((new Date().getTime() / 1000) + (60 * 60 * 12)) + ":R>\n" +
                             "(1️⃣) " + nonZeroItems[0] + "\n(2️⃣) " + nonZeroItems[1]).then(msg => {
@@ -307,6 +311,7 @@ bot.on("messageCreate", async message => {
                     let data = {
                         "items": items,
                         "players": players,
+                        "gamePlayers": gamePlayers,
                         "kills": kills,
                         "killers": killers,
                         "saves": saves,
