@@ -128,7 +128,8 @@ bot.on("messageCreate", async message => {
                     //console.log(players);
                     let player = players.find(p => p.id === message.author.id);
                     console.log(player);
-                    let gamePlayer = gamePlayers.find(p => p.id === message.author.id)
+                    let gamePlayer = gamePlayers.find(p => p.id === message.author.id);
+                    console.log(gamePlayer);
 
                     if (!player) {
                         players.push({
@@ -151,7 +152,8 @@ bot.on("messageCreate", async message => {
                             gamePlayers.push({
                                 id: message.author.id,
                                 lastMsg: player.lastMsg ?? new Date().getTime()
-                            })
+                            });
+                            gamePlayer = gamePlayers[gamePlayers.length - 1];
                         }
                         let minutesLeft = (gamePlayer.lastMsg - (new Date().getTime() - (items.filter(m => m.points > 0).length <= 5 ? 1800000 : 3600000))) / (1000 * 60);
                         if (minutesLeft > 0) { //1000 * 60 * 60 * 1 (1 hour)
