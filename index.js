@@ -78,6 +78,8 @@ bot.on("messageCreate", async message => {
         if ((cmd.startsWith("-") || cmd.startsWith("+")) && items.filter(m => m.points > 0).length > 2 &&
             message.content.indexOf("+") != -1 && message.content.indexOf("-") != -1 && active && dm.checkValidChannel(message.guildId, message.channelId)) {
 
+            console.log("Giving and Taking")
+
             players = dm.getPlayerData(message.guildId);
             let fullData = dm.getGameData(message.guildId, message.channelId);
             kills = fullData.kills;
@@ -125,6 +127,7 @@ bot.on("messageCreate", async message => {
 
             if (valid) {
                 //console.log(players);
+                console.log("Valid Command")
                 let player = players.filter(p => p.id === message.author.id)[0];
                 console.log(player);
 
@@ -161,6 +164,7 @@ bot.on("messageCreate", async message => {
             }
 
             if (valid) {
+                console.log("Valid Command 2")
                 let player = players.filter(p => p.id === message.author.id)[0];
 
                 if (items[minusindex].points == 1) {
@@ -215,6 +219,7 @@ bot.on("messageCreate", async message => {
             let totalNonzero = items.filter(m => m.points > 0).length;
 
             if (valid) {
+                console.log("Valid Command 3")
                 let player = players.filter(p => p.id === message.author.id)[0];
 
                 if (totalNonzero == 2 && player.badges.indexOf("Finishing Blow") == -1) {
@@ -256,6 +261,8 @@ bot.on("messageCreate", async message => {
                         pointsEmbed.addField("\u200b", pointCol, true);
                     }
                 }
+
+                console.log("Replying to Message")
 
                 message.reply({ embeds: [pointsEmbed] });
 
