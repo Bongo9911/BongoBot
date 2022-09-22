@@ -312,7 +312,6 @@ bot.on("messageCreate", async message => {
 
                     let data = {
                         "items": items,
-                        "players": players,
                         "gamePlayers": gamePlayers,
                         "kills": kills,
                         "killers": killers,
@@ -322,7 +321,8 @@ bot.on("messageCreate", async message => {
                         "active": active,
                     }
 
-                    dm.saveData(data, message.guildId, message.channelId);
+                    dm.saveGameData(data, message.guildId, message.channelId);
+                    dm.savePlayerData(players, message.guildId);
                 }
                 else {
                     message.reply(errors);
