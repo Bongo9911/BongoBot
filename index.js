@@ -71,6 +71,9 @@ bot.on("messageCreate", async message => {
 
         let errors = "";
 
+        console.log("Valid Channel: " + dm.checkValidChannel(message.guildId, message.channelId))
+        console.log("Message: " + message.content)
+
         let valid = true;
         if ((cmd.startsWith("-") || cmd.startsWith("+")) && items.filter(m => m.points > 0).length > 2 &&
             message.content.indexOf("+") != -1 && message.content.indexOf("-") != -1 && active && dm.checkValidChannel(message.guildId, message.channelId)) {
