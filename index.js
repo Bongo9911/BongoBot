@@ -71,11 +71,6 @@ bot.on("messageCreate", async message => {
 
         let errors = "";
 
-        console.log("Condition 1: " + (cmd.startsWith("-") || cmd.startsWith("+")))
-        console.log("Condition 2: " + message.content.indexOf("+") != -1 && message.content.indexOf("-") != -1)
-        console.log("Condition 3: " + active)
-        console.log("Condition 4: " + dm.checkValidChannel(message.guildId, message.channelId))
-
         let valid = true;
         if ((cmd.startsWith("-") || cmd.startsWith("+")) &&
             message.content.indexOf("+") != -1 && message.content.indexOf("-") != -1 && dm.checkValidChannel(message.guildId, message.channelId)) {
