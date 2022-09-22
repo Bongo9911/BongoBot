@@ -71,17 +71,10 @@ bot.on("messageCreate", async message => {
 
         let errors = "";
 
-        console.log("Valid Channel: " + dm.checkValidChannel(message.guildId, message.channelId))
-        console.log("Message: " + message.content)
-
-        console.log("Starts with appropriate string: " + (cmd.startsWith("-") || cmd.startsWith("+")))
-        console.log()
 
         let valid = true;
         if ((cmd.startsWith("-") || cmd.startsWith("+")) &&
             message.content.indexOf("+") != -1 && message.content.indexOf("-") != -1 && active && dm.checkValidChannel(message.guildId, message.channelId)) {
-
-            console.log("Giving and Taking")
 
             let fullData = dm.getGameData(message.guildId, message.channelId);
             items = fullData.items;
