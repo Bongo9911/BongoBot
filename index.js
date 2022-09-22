@@ -78,23 +78,23 @@ bot.on("messageCreate", async message => {
 
         let valid = true;
         if ((cmd.startsWith("-") || cmd.startsWith("+")) &&
-            message.content.indexOf("+") != -1 && message.content.indexOf("-") != -1 && active && dm.checkValidChannel(message.guildId, message.channelId)) {
+            message.content.indexOf("+") != -1 && message.content.indexOf("-") != -1 && dm.checkValidChannel(message.guildId, message.channelId)) {
 
             console.log("Giving and Taking")
 
             let fullData = dm.getGameData(message.guildId, message.channelId);
             items = fullData.items;
+            active = fullData.active;
 
             console.log(items);
 
-            if (items.filter(m => m.points > 0).length > 2) {
+            if (items.filter(m => m.points > 0).length > 2 && active) {
                 players = dm.getPlayerData(message.guildId);
                 kills = fullData.kills;
                 killers = fullData.killers;
                 saves = fullData.saves;
                 savers = fullData.savers;
                 history = fullData.history;
-                active = fullData.active;
                 let minusindex = -1;
                 let plusindex = -1;
 
