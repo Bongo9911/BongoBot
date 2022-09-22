@@ -76,8 +76,12 @@ bot.on("messageCreate", async message => {
         if ((cmd.startsWith("-") || cmd.startsWith("+")) &&
             message.content.indexOf("+") != -1 && message.content.indexOf("-") != -1 && active && dm.checkValidChannel(message.guildId, message.channelId)) {
 
+            console.log("Giving and Taking")
+
             let fullData = dm.getGameData(message.guildId, message.channelId);
             items = fullData.items;
+
+            console.log(items);
 
             if (items.filter(m => m.points > 0).length > 2) {
                 players = dm.getPlayerData(message.guildId);
