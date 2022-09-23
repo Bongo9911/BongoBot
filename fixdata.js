@@ -10,13 +10,13 @@ if (fs.existsSync("./data.json")) {
         let players = fullData["279211267443523585"].players;
 
         fullData["279211267443523585"]["980960076686848030"].history = fullData["279211267443523585"]["980960076686848030"].history.slice(0,35);
-        players["106155803328692224"].kills -= 1;
-        players["272846817991983107"].kills -= 1;
-        players["429033918079959040"].kills -= 1;
-        players["333537760835141632"].kills -= 1;
-        players["207829172775550976"].kills -= 1;
+        players.find(p => p.id =="106155803328692224").kills -= 1;
+        players.find(p => p.id =="272846817991983107").kills -= 1;
+        players.find(p => p.id =="429033918079959040").kills -= 1;
+        players.find(p => p.id =="333537760835141632").kills -= 1;
+        players.find(p => p.id =="207829172775550976").kills -= 1;
 
-        players["190928550843514881"].saves -= 1;
+        players.find(p => p.id =="190928550843514881").saves -= 1;
 
         fullData["279211267443523585"]["980960076686848030"].kills = fullData["279211267443523585"]["980960076686848030"].kills.slice(0,3);
         fullData["279211267443523585"]["980960076686848030"].killers = fullData["279211267443523585"]["980960076686848030"].killers.slice(0,3);
@@ -24,9 +24,7 @@ if (fs.existsSync("./data.json")) {
         fullData["279211267443523585"]["980960076686848030"].saves = fullData["279211267443523585"]["980960076686848030"].saves.slice(0,3);
         fullData["279211267443523585"]["980960076686848030"].savers = fullData["279211267443523585"]["980960076686848030"].savers.slice(0,3);
 
-        players["106155803328692224"].badges.splice(players["106155803328692224"].badges.indexOf("Serial Killer"));
-
-        fullData["279211267443523585"].players = players;
+        players.find(p => p.id =="106155803328692224").badges.splice(players.find(p => p.id =="106155803328692224").badges.indexOf("Serial Killer"));
 
         fullData["279211267443523585"]["980960076686848030"].items[0].points = 7
         fullData["279211267443523585"]["980960076686848030"].items[1].points = 6
@@ -46,6 +44,8 @@ if (fs.existsSync("./data.json")) {
         fullData["279211267443523585"]["980960076686848030"].items[15].points = 0
         fullData["279211267443523585"]["980960076686848030"].items[16].points = 4
         fullData["279211267443523585"]["980960076686848030"].items[17].points = 12
+
+        fullData["279211267443523585"].players = players;
 
         fs.writeFile("./data.json", JSON.stringify(fullData), 'utf8', (err) => {
             if (err) {
