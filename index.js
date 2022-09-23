@@ -83,7 +83,7 @@ bot.on("messageCreate", async message => {
 
             if (items.filter(m => m.points > 0).length > 2 && active) {
                 players = dm.getPlayerData(message.guildId);
-                gamePlayers = fullData.players ?? [];
+                gamePlayers = fullData.gamePlayers ?? [];
                 kills = fullData.kills;
                 killers = fullData.killers;
                 saves = fullData.saves;
