@@ -9,7 +9,10 @@ if (fs.existsSync("./data.json")) {
         let fullData = JSON.parse(data);
         let players = fullData["279211267443523585"].players;
 
-        fullData["279211267443523585"]["980960076686848030"].history = fullData["279211267443523585"]["980960076686848030"].history.slice(0,35);
+        // fullData["279211267443523585"]["980960076686848030"].history = fullData["279211267443523585"]["980960076686848030"].history.slice(0,35);
+        fullData["279211267443523585"]["980960076686848030"].history.forEach(m => {
+            m = m.slice(0,35);
+        })
         players.find(p => p.id =="106155803328692224").kills -= 1;
         players.find(p => p.id =="272846817991983107").kills -= 1;
         players.find(p => p.id =="429033918079959040").kills -= 1;
