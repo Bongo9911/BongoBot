@@ -270,7 +270,7 @@ bot.on("messageCreate", async message => {
                         }
                     }
 
-                    pointsEmbed.setFooter({ text: history[0].length - 1, iconURL: 'https://i.imgur.com/kk9lhk3.png' })
+                    pointsEmbed.setFooter({ text: (history[0].length - 1).toString(), iconURL: 'https://i.imgur.com/kk9lhk3.png' })
 
                     message.reply({ embeds: [pointsEmbed] });
 
