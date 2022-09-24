@@ -270,6 +270,8 @@ bot.on("messageCreate", async message => {
                         }
                     }
 
+                    pointsEmbed.setFooter({ text: history[0].length - 1, iconURL: 'https://i.imgur.com/kk9lhk3.png' })
+
                     message.reply({ embeds: [pointsEmbed] });
 
                     if (totalNonzero == 5 && items[minusindex].points == 0) {
