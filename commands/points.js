@@ -27,6 +27,7 @@ exports.run = async (bot, message, args) => {
                 pointsEmbed.addField("\u200b", pointCol, true);
             }
         }
+        pointsEmbed.setFooter({ text: 'Command b.points', iconURL: 'https://i.imgur.com/kk9lhk3.png' });
         message.reply({ embeds: [pointsEmbed] });
     }
     else {
