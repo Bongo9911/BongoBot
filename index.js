@@ -296,7 +296,7 @@ bot.on("messageCreate", async message => {
 
                                 winVoteMsg.react("1️⃣").then(() => {
                                     winVoteMsg.react("2️⃣").then(async () => {
-                                        new Promise(r => setTimeout(r, 1000 * 60 * 60 * 12)).then(() => { //12 hours
+                                        setTimeout(() => {
                                             if (winVoteMsg.reactions.cache.get("1️⃣").count > winVoteMsg.reactions.cache.get("2️⃣").count) {
                                                 message.channel.send("**" + nonZeroItems[0] + " has won the game with " + winVoteMsg.reactions.cache.get("1️⃣").count + " votes!**");
                                             }
@@ -306,7 +306,7 @@ bot.on("messageCreate", async message => {
                                             else {
                                                 message.channel.send("**The game has ended in a tie!**");
                                             }
-                                        });
+                                        }, 1000 * 60 * 60 * 12); //12 hours
                                     });
                                 });
                             });
