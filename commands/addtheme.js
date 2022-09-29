@@ -24,7 +24,6 @@ exports.run = async (bot, message, args) => {
         else {
             message.reply("No theme name provided, please use syntax b.addtheme <Theme Name>.");
         }
-        //TODO: Add ability to add custom colors or emojis
     }
     else {
         message.reply("Only admins can perform this action.");

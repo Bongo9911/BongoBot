@@ -7,8 +7,10 @@ exports.run = async (bot, message, args) => {
         .setTitle("Badges")
         .setDescription(":knife: **Killer** - Get your first kill\n" +
             ":superhero: **Hero** - Get your first save\n" +
+            ":hand_splayed: **Helping Hand** - Get your first assist\n" +
             ":dagger: **Serial Killer** - Get 5 kills\n" +
             ":innocent: **Savior** - Get 5 saves\n" +
+            ":people_hugging: **True Homie** - Get 5 assists\n" +
             ":skull: **Memento Mori** - Kill something within 5 minutes of it being saved\n" +
             ":camel: **Double Trouble** - Save something that has already been saved.\n"+
             ":boom: **Finishing Blow** - Get the last kill of the game.")

@@ -8,6 +8,8 @@ let badges = {
     "Serial Killer": ":dagger:",
     "Hero": ":superhero:",
     "Savior": ":innocent:",
+    "Helping Hand": ":hand_splayed:",
+    "True Homie": ":people_hugging:",
     "Memento Mori": ":skull:",
     "Double Trouble": ":camel:",
     "Finishing Blow": ":boom:"
@@ -18,6 +20,8 @@ let badgeLinks = {
     "Serial Killer": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/dagger_1f5e1-fe0f.png",
     "Hero": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/superhero_1f9b8.png",
     "Savior": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/smiling-face-with-halo_1f607.png",
+    "Helping Hand": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/raised-hand_270b.png",
+    "True Homie": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/people-hugging_1fac2.png",
     "Memento Mori": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/skull_1f480.png",
     "Double Trouble": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/two-hump-camel_1f42b.png",
     "Finishing Blow": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/322/collision_1f4a5.png",
@@ -57,6 +61,7 @@ exports.run = async (bot, message, args) => {
                 //{ name: '\u200B', value: '\u200B' },
                 { name: 'Kills', value: player.kills.toString(), inline: true },
                 { name: 'Saves', value: player.saves.toString(), inline: true },
+                { name: 'Assists', value: player.assists.toString(), inline: true },
             )
 
         if (badgeText.length) {

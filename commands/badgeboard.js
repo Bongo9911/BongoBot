@@ -8,6 +8,8 @@ let badges = {
     "Serial Killer": ":dagger:",
     "Hero": ":superhero:",
     "Savior": ":innocent:",
+    "Helping Hand": ":hand_splayed:",
+    "True Homie": ":people_hugging:",
     "Memento Mori": ":skull:",
     "Double Trouble": ":camel:",
     "Finishing Blow": ":boom:"

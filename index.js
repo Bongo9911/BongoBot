@@ -47,6 +47,7 @@ let kills = [];
 let killers = [];
 let saves = [];
 let savers = [];
+let assisters = [];
 
 let history = [];
 
@@ -88,6 +89,7 @@ bot.on("messageCreate", async message => {
                 killers = fullData.killers;
                 saves = fullData.saves;
                 savers = fullData.savers;
+                assisters = fullData.assisters;
                 history = fullData.history;
                 let minusindex = -1;
                 let plusindex = -1;
@@ -138,6 +140,7 @@ bot.on("messageCreate", async message => {
                             lastminus: items[minusindex].label,
                             kills: 0,
                             saves: 0,
+                            assists: 0,
                             badges: [],
                             featuredBadge: "",
                         });
@@ -148,7 +151,7 @@ bot.on("messageCreate", async message => {
                         //points[minusindex] -= points.filter(p => p > 0).length <= 5 ? 2 : 1;
                     }
                     else {
-                        if(!gamePlayer) {
+                        if (!gamePlayer) {
                             gamePlayers.push({
                                 id: message.author.id,
                                 lastMsg: player.lastMsg ?? new Date().getTime()
@@ -176,6 +179,10 @@ bot.on("messageCreate", async message => {
                 if (valid) {
                     let player = players.find(p => p.id === message.author.id);
 
+                    if (item[minusindex].points == 2) {
+                        item[minusindex].assister = player.id;
+                    }
+
                     if (items[minusindex].points == 1) {
                         player.kills += 1;
                         kills.push(items[minusindex].label);
@@ -192,6 +199,20 @@ bot.on("messageCreate", async message => {
                         else if (player.kills == 5) {
                             player.badges.push("Serial Killer");
                             message.reply("Badge Awarded! :dagger: **Serial Killer**");
+                        }
+
+                        let assister = players.find(p => p.id == items[minusindex].assister);
+                        assister.assists += 1;
+
+                        assisters.push(assister.id);
+
+                        if (assister.assists == 1) {
+                            player.badges.push("Helping Hand");
+                            message.reply("Badge Awarded! :hand_splayed: **Helping Hand**");
+                        }
+                        else if (assister.assists == 5) {
+                            player.badges.push("True Homie");
+                            message.reply("Badge Awarded! :people_hugging: **True Homie**");
                         }
                     }
                     //if ((points[plusindex] == 2 && points.filter(p => p > 0).length > 5) || (points[plusindex] == 3 && points.filter(p => p > 0).length <= 5)) {
@@ -296,7 +317,15 @@ bot.on("messageCreate", async message => {
 
                                 winVoteMsg.react("1️⃣").then(() => {
                                     winVoteMsg.react("2️⃣").then(async () => {
-                                        setTimeout(() => {
+                                        let filter = (m) => false;
+                                        message.channel.awaitMessages({
+                                            filter,
+                                            max: 1,
+                                            time: 1000 * 60 * 60 * 12, //12 hours
+                                            errors: ['time']
+                                        }).then(messages => {
+
+                                        }).catch(error => {
                                             if (winVoteMsg.reactions.cache.get("1️⃣").count > winVoteMsg.reactions.cache.get("2️⃣").count) {
                                                 message.channel.send("**" + nonZeroItems[0] + " has won the game with " + winVoteMsg.reactions.cache.get("1️⃣").count + " votes!**");
                                             }
@@ -306,7 +335,7 @@ bot.on("messageCreate", async message => {
                                             else {
                                                 message.channel.send("**The game has ended in a tie!**");
                                             }
-                                        }, 1000 * 60 * 60 * 12); //12 hours
+                                        });
                                     });
                                 });
                             });
@@ -319,6 +348,7 @@ bot.on("messageCreate", async message => {
                         "killers": killers,
                         "saves": saves,
                         "savers": savers,
+                        "assisters": assisters,
                         "history": history,
                         "active": active,
                     }

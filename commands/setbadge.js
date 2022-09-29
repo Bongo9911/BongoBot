@@ -8,6 +8,8 @@ let badges = {
     "hero": "Hero",
     "serial killer": "Serial Killer",
     "savior": "Savior",
+    "helping hand": "Helping Hand",
+    "true homie": "True Homie",
     "memento mori": "Memento Mori",
     "double trouble": "Double Trouble",
     "finishing blow": "Finishing Blow"

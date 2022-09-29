@@ -60,6 +60,7 @@ module.exports = class DataManager {
         if(!(channelID in this.data[guildID])) {
             console.log("Channel ID: " + channelID + " for guild ID: " + guildID + " not found. Adding.");
             this.data[guildID][channelID] = {
+                assisters: [],
                 items: [],
                 killers: [],
                 kills: [],

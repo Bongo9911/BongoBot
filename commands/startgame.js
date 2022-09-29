@@ -64,6 +64,7 @@ function startTheme(message) {
                     gameData.savers = [];
                     gameData.kills = [];
                     gameData.killers = [];
+                    gameData.assisters = [];
 
                     dm.saveGameData(gameData, message.guildId, message.channelId);
                     message.reply("Starting theme: " + themes[themeIndex].name);
