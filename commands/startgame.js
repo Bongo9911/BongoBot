@@ -47,6 +47,7 @@ function startTheme(message) {
                     gameData.history = [];
                     themes[themeIndex].items.forEach(m => {
                         items.push({
+                            assister: "",
                             item: m.item,
                             itemLower: m.item.toLowerCase(),
                             label: m.label,
