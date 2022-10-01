@@ -208,11 +208,11 @@ bot.on("messageCreate", async message => {
 
                         if (assister.assists == 1) {
                             player.badges.push("Helping Hand");
-                            message.reply("Badge Awarded! :hand_splayed: **Helping Hand**");
+                            message.channel.send("<@" + assister.id + "> Badge Awarded! :hand_splayed: **Helping Hand**");
                         }
                         else if (assister.assists == 5) {
                             player.badges.push("True Homie");
-                            message.reply("Badge Awarded! :people_hugging: **True Homie**");
+                            message.channel.send("<@" + assister.id + "> Badge Awarded! :people_hugging: **True Homie**");
                         }
                     }
                     //if ((points[plusindex] == 2 && points.filter(p => p > 0).length > 5) || (points[plusindex] == 3 && points.filter(p => p > 0).length <= 5)) {
