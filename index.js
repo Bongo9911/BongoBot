@@ -145,6 +145,7 @@ bot.on("messageCreate", async message => {
                             id: message.author.id,
                             lastMsg: new Date().getTime()
                         })
+                        gamePlayer = gamePlayers[gamePlayers.length - 1];
                         //points[minusindex] -= points.filter(p => p > 0).length <= 5 ? 2 : 1;
                     }
                     else {
