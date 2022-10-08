@@ -125,7 +125,6 @@ bot.on("messageCreate", async message => {
                 }
 
                 if (valid) {
-                    //console.log(players);
                     let player = players.find(p => p.id === message.author.id);
                     console.log(player);
                     let gamePlayer = gamePlayers.find(p => p.id === message.author.id);
