@@ -179,8 +179,8 @@ bot.on("messageCreate", async message => {
                 if (valid) {
                     let player = players.find(p => p.id === message.author.id);
 
-                    if (item[minusindex].points == 2) {
-                        item[minusindex].assister = player.id;
+                    if (items[minusindex].points == 2) {
+                        items[minusindex].assister = player.id;
                     }
 
                     if (items[minusindex].points == 1) {
