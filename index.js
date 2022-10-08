@@ -205,11 +205,11 @@ bot.on("messageCreate", async message => {
                         assisters.push(assister.id);
 
                         if (assister.assists == 1) {
-                            player.badges.push("Helping Hand");
+                            assister.badges.push("Helping Hand");
                             message.channel.send("<@" + assister.id + "> Badge Awarded! :hand_splayed: **Helping Hand**");
                         }
                         else if (assister.assists == 5) {
-                            player.badges.push("True Homie");
+                            assister.badges.push("True Homie");
                             message.channel.send("<@" + assister.id + "> Badge Awarded! :people_hugging: **True Homie**");
                         }
                     }

@@ -15,7 +15,7 @@ if (fs.existsSync("./data.json")) {
             p.lastMsg = 0;
         })
 
-        fullData["279211267443523585"].players = players;
+        fullData["279211267443523585"]["980960076686848030"].gamePlayers = players;
 
         fs.writeFile("./data.json", JSON.stringify(fullData), 'utf8', (err) => {
             if (err) {
