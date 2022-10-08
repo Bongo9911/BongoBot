@@ -80,8 +80,6 @@ bot.on("messageCreate", async message => {
             items = fullData.items;
             active = fullData.active;
 
-            console.log(items);
-
             if (items.filter(m => m.points > 0).length > 2 && active) {
                 players = dm.getPlayerData(message.guildId);
                 gamePlayers = fullData.gamePlayers ?? [];
