@@ -7,10 +7,10 @@ if (fs.existsSync("./data.json")) {
             return;
         }
         let fullData = JSON.parse(data);
-        let players = fullData["279211267443523585"].players;
+        let players = fullData["279211267443523585"]["980960076686848030"].players;
 
         players.forEach(p => {
-            p.assists = 0;
+            p.lastMsg = 0;
         })
 
         fullData["279211267443523585"].players = players;
