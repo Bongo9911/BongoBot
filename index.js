@@ -256,7 +256,7 @@ bot.on("messageCreate", async message => {
 
                     let nonZeroItems = items.filter((m, i) => m.points > 0 || (m.points == 0 && i == minusindex));
 
-                    let columns = Math.ceil(nonZeroItems.length / 25);
+                    let columns = Math.ceil(nonZeroItems.length / 20);
                     let perColumn = Math.ceil(nonZeroItems.length / columns);
 
                     if (items[minusindex].points == 0 && items.length > 35 && totalNonzero == Math.floor(items.length / 2)) {
