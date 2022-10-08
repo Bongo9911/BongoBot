@@ -7,7 +7,7 @@ if (fs.existsSync("./data.json")) {
             return;
         }
         let fullData = JSON.parse(data);
-        let players = fullData["279211267443523585"]["980960076686848030"].players;
+        let players = fullData["279211267443523585"]["980960076686848030"].gamePlayers;
 
         console.log(Object.keys(fullData["279211267443523585"]["980960076686848030"]));
 
