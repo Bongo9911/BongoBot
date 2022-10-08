@@ -64,7 +64,7 @@ module.exports = class DataManager {
                 items: [],
                 killers: [],
                 kills: [],
-                players: [],
+                gamePlayers: [],
                 savers: [],
                 saves: [],
                 history: [],
