@@ -65,6 +65,10 @@ bot.on("messageCreate", async message => {
         if (message.author.bot) return;
         if (message.channel.type === "dm") return;
 
+        let settings = dm.getGuildSettings(message.guildId);
+
+        if (settings.blockedUsers.includes(message.author.id)) return;
+
         //get prefix from config and prepare message so it can be read as a command
         let messageArray = message.content.split(" ");
         let cmd = messageArray[0];
@@ -256,9 +260,6 @@ bot.on("messageCreate", async message => {
 
                     let nonZeroItems = items.filter((m, i) => m.points > 0 || (m.points == 0 && i == minusindex));
 
-                    let columns = Math.ceil(nonZeroItems.length / 20);
-                    let perColumn = Math.ceil(nonZeroItems.length / columns);
-
                     if (items[minusindex].points == 0 && items.length > 35 && totalNonzero == Math.floor(items.length / 2)) {
                         message.channel.send("Top half reached! All point totals will now be halved.");
                         items.forEach(m => m.points = Math.round(m.points / 2));
@@ -267,6 +268,9 @@ bot.on("messageCreate", async message => {
                     for (let p = 0; p < items.length; ++p) {
                         history[p].push(items[p].points);
                     }
+
+                    let columns = Math.ceil(nonZeroItems.length / 20);
+                    let perColumn = Math.ceil(nonZeroItems.length / columns);
 
                     const pointsEmbed = new MessageEmbed()
                         .setColor('#0099ff')
