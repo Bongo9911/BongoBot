@@ -83,7 +83,6 @@ module.exports = class DataManager {
     }
 
     getGuildSettings(guildID) {
-        console.log(this.settings);
         return this.settings[guildID];
     }
 
