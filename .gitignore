@@ -4,3 +4,4 @@ data-backup.json
 .env
 themes.json
 settings.json
+data-backup-*.json

@@ -66,7 +66,7 @@ bot.on("messageCreate", async message => {
         if (message.channel.type === "dm") return;
 
         let settings = dm.getGuildSettings(message.guildId);
-
+        console.log(settings);
         if (settings.blockedUsers.includes(message.author.id)) return;
 
         //get prefix from config and prepare message so it can be read as a command
