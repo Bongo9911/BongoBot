@@ -84,7 +84,7 @@ module.exports = class DataManager {
 
     getGuildSettings(guildID) {
         if(!(guildID in this.settings)) {
-            createDefaultGuildSettings(guildID)
+            this.createDefaultGuildSettings(guildID)
         }
         return this.settings[guildID];
     }
