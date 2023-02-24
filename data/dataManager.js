@@ -83,14 +83,14 @@ module.exports = class DataManager {
     }
 
     getGuildSettings(guildID) {
-        if(!guildID in this.settings) {
+        if(!(guildID in this.settings)) {
             createDefaultGuildSettings(guildID)
         }
         return this.settings[guildID];
     }
 
     createDefaultGuildSettings(guildID) {
-        if(!guildID in this.data) {
+        if(!(guildID in this.data)) {
             this.data[guildID] = {
                 players: [],
                 gamePlayers: [],
@@ -103,11 +103,12 @@ module.exports = class DataManager {
                 active: false
             }
         }
-        if(!guildID in this.themes) {
+        if(!(guildID in this.themes)) {
             this.themes[guildID] = {
                 themes: []
             }
         }
+        console.log("ADDING SETTINGS")
         this.settings[guildID] = {
             admins: ["200313450319052801"],
             blockedUsers: [],
