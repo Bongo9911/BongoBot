@@ -83,7 +83,37 @@ module.exports = class DataManager {
     }
 
     getGuildSettings(guildID) {
-        return this.settings[guildID];
+        if(guildID in this.settings) {
+            return this.settings[guildID];
+        }
+        else {
+
+        }
+    }
+
+    createDefaultGuildSettings(guildID) {
+        if(!guildID in this.data) {
+            this.data[guildID] = {
+                players: [],
+                gamePlayers: [],
+                kills: [],
+                killers: [],
+                saves: [],
+                savers: [],
+                assisters: [],
+                history: [],
+                active: false
+            }
+        }
+        if(!guildID in this.themes) {
+            this.themes[guildID] = {
+                themes: []
+            }
+        }
+        this.settings[guildID] = {
+            admins: ["200313450319052801"],
+            blockedUsers: [],
+        }
     }
 
     //Attempts to add a theme for the specified guild
