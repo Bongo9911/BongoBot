@@ -39,10 +39,10 @@ function confirmRemoveTheme(message) {
             let message = messages.first()
             if (message.content.toUpperCase() == "YES") {
                 if (dm.removeTheme(message.guildId, themename)) {
-                    message.reply("Theme " + themename + " successfully removed.");
+                    message.reply("Theme **" + themename + "** successfully removed.");
                 }
                 else {
-                    message.reply("Theme " + themename + " not found. Maybe someone else already removed it?");
+                    message.reply("Theme **" + themename + "** not found. Maybe someone else already removed it?");
                 }
             }
             else {

@@ -113,6 +113,7 @@ module.exports = class DataManager {
             admins: ["200313450319052801"],
             blockedUsers: [],
         }
+        this.saveSettings();
     }
 
     //Attempts to add a theme for the specified guild
@@ -160,6 +161,14 @@ module.exports = class DataManager {
         this.data[guildID].players = players;
 
         fs.writeFile("./data.json", JSON.stringify(this.data), 'utf8', (err) => {
+            if (err) {
+                console.error(err);
+            }
+        });
+    }
+
+    saveSettings() {
+        fs.writeFile("./settings.json", JSON.stringify(this.settings), 'utf8', (err) => {
             if (err) {
                 console.error(err);
             }

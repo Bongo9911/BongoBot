@@ -159,10 +159,12 @@ bot.on("messageCreate", async message => {
                             });
                             gamePlayer = gamePlayers[gamePlayers.length - 1];
                         }
-                        let minutesLeft = (gamePlayer.lastMsg - (new Date().getTime() - (items.filter(m => m.points > 0).length <= 5 ? 1800000 : 3600000))) / (1000 * 60);
+                        // let minutesLeft = (gamePlayer.lastMsg - (new Date().getTime() - (items.filter(m => m.points > 0).length <= 5 ? 1800000 : 3600000))) / (1000 * 60);
+                        let minutesLeft = (gamePlayer.lastMsg - (new Date().getTime() - 1800000)) / (1000 * 60);
                         if (minutesLeft > 0) { //1000 * 60 * 60 * 1 (1 hour)
                             valid = false;
-                            errors += "You can send another message <t:" + (Math.ceil(gamePlayer.lastMsg / 1000) + (items.filter(p => p.points > 0).length <= 5 ? 1800 : 3600)) + ":R>.";
+                            // errors += "You can send another message <t:" + (Math.ceil(gamePlayer.lastMsg / 1000) + (items.filter(p => p.points > 0).length <= 5 ? 1800 : 3600)) + ":R>.";
+                            errors += "You can send another message <t:" + (Math.ceil(gamePlayer.lastMsg / 1000) + 1800) + ":R>.";
                         }
                         // else if (plusindex == labels.indexOf(player.lastadd) && minusindex == labels.indexOf(player.lastminus) && points.filter(p => p > 0).length > 5) {
                         //     valid = false;

@@ -186,7 +186,7 @@ function finishCreateTheme(message) {
     console.log("Items: " + itemobjs.map(m => "{ Item: " + m.item + ", Label: " + m.label + " } "));
 
     if (dm.addTheme(message.guildId, themename, itemobjs)) {
-        message.reply("Theme " + themename + " succesfully created.");
+        message.reply("Theme **" + themename + "** successfully created.");
     }
     else {
         message.reply("Theme already exists, please use a different name.");
