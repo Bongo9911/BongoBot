@@ -303,7 +303,7 @@ bot.on("messageCreate", async message => {
                         message.channel.send("**TOP 5 RULE CHANGE**: Cooldown shortened to 30 minutes.");
                     }
 
-                    if (totalNonzero == 2) {
+                    if (totalNonzero == 3) {
                         nonZeroItems = [];
                         for (let i = 0; i < items.length; ++i) {
                             if (items[i].points > 0) {
@@ -312,32 +312,37 @@ bot.on("messageCreate", async message => {
                         }
 
                         //"You can send another message <t:" + (Math.ceil(gamePlayer.lastMsg / 1000) + (items.filter(p => p.points > 0).length <= 5 ? 1800 : 3600)) + ":R>."
-                        message.channel.send("**<@&983347003176132608>\nFINAL TWO:**\n(react to vote)\n" +
+                        message.channel.send("**<@&983347003176132608>\nFINAL THREE:**\n(react to vote)\n" +
                             "Voting ends <t:" + Math.ceil((new Date().getTime() / 1000) + (60 * 60 * 12)) + ":R>\n" +
-                            "(1️⃣) " + nonZeroItems[0] + "\n(2️⃣) " + nonZeroItems[1]).then(msg => {
+                            "(1️⃣) " + nonZeroItems[0] + "\n(2️⃣) " + nonZeroItems[1] + "\n(3️⃣) " + nonZeroItems[2]).then(msg => {
                                 winVoteMsg = msg;
                                 winVoteMsg.pin();
 
                                 winVoteMsg.react("1️⃣").then(() => {
-                                    winVoteMsg.react("2️⃣").then(async () => {
-                                        let filter = (m) => false;
-                                        message.channel.awaitMessages({
-                                            filter,
-                                            max: 1,
-                                            time: 1000 * 60 * 60 * 12, //12 hours
-                                            errors: ['time']
-                                        }).then(messages => {
+                                    winVoteMsg.react("2️⃣").then(() => {
+                                        winVoteMsg.react("3️⃣").then(async () => {
+                                            let filter = (m) => false;
+                                            message.channel.awaitMessages({
+                                                filter,
+                                                max: 1,
+                                                time: 1000 * 60 * 60 * 12, //12 hours
+                                                errors: ['time']
+                                            }).then(messages => {
 
-                                        }).catch(error => {
-                                            if (winVoteMsg.reactions.cache.get("1️⃣").count > winVoteMsg.reactions.cache.get("2️⃣").count) {
-                                                message.channel.send("**" + nonZeroItems[0] + " has won the game with " + winVoteMsg.reactions.cache.get("1️⃣").count + " votes!**");
-                                            }
-                                            else if (winVoteMsg.reactions.cache.get("1️⃣").count < winVoteMsg.reactions.cache.get("2️⃣").count) {
-                                                message.channel.send("**" + nonZeroItems[1] + " has won the game with " + winVoteMsg.reactions.cache.get("2️⃣").count + " votes!**");
-                                            }
-                                            else {
-                                                message.channel.send("**The game has ended in a tie!**");
-                                            }
+                                            }).catch(error => {
+                                                if (winVoteMsg.reactions.cache.get("1️⃣").count > winVoteMsg.reactions.cache.get("2️⃣").count && winVoteMsg.reactions.cache.get("1️⃣").count > winVoteMsg.reactions.cache.get("3️⃣").count) {
+                                                    message.channel.send("**" + nonZeroItems[0] + " has won the game with " + winVoteMsg.reactions.cache.get("1️⃣").count + " votes!**");
+                                                }
+                                                else if (winVoteMsg.reactions.cache.get("2️⃣").count > winVoteMsg.reactions.cache.get("1️⃣").count && winVoteMsg.reactions.cache.get("2️⃣").count > winVoteMsg.reactions.cache.get("3️⃣").count) {
+                                                    message.channel.send("**" + nonZeroItems[1] + " has won the game with " + winVoteMsg.reactions.cache.get("2️⃣").count + " votes!**");
+                                                }
+                                                else if (winVoteMsg.reactions.cache.get("3️⃣").count > winVoteMsg.reactions.cache.get("1️⃣").count && winVoteMsg.reactions.cache.get("3️⃣").count > winVoteMsg.reactions.cache.get("2️⃣").count) {
+                                                    message.channel.send("**" + nonZeroItems[2] + " has won the game with " + winVoteMsg.reactions.cache.get("3️⃣").count + " votes!**");
+                                                }
+                                                else {
+                                                    message.channel.send("**The game has ended in a tie!**");
+                                                }
+                                            });
                                         });
                                     });
                                 });
